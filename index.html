@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Laksen - منصة شحن الألعاب والخدمات الرقمية">
+  <title>Laksen | شحن الألعاب</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- =====================================================
+       1) HEADER — الشعار والتنقل والحساب
+       ===================================================== -->
+  <header class="site-header" id="site-header">
+    <a class="brand" href="#home" aria-label="Laksen - الرئيسية">
+      <!-- استبدل الصورة بشعارك: assets/logos/laksen-logo.png -->
+      <img class="brand-logo" src="assets/logos/laksen-logo.png" alt="Laksen">
+      <span class="brand-name">Laksen</span>
+    </a>
+
+    <nav class="main-navigation" aria-label="القائمة الرئيسية">
+      <a href="#home">الرئيسية</a>
+      <a href="#games">الألعاب</a>
+      <a href="#wallet">المحفظة</a>
+      <a href="#my-orders">طلباتي</a>
+      <a href="#support">الدعم</a>
+    </nav>
+
+    <div class="header-account">
+      <a class="button button-outline" href="#login">تسجيل الدخول</a>
+      <a class="button button-primary" href="#register">إنشاء حساب</a>
+    </div>
+  </header>
+
+  <main class="site-main">
+
+    <!-- =====================================================
+         2) HOME — الصفحة الرئيسية
+         ===================================================== -->
+    <section class="page-section home-page" id="home">
+
+      <!-- العرض الرئيسي: غيّر ملف الصورة فقط -->
+      <section class="hero-banner" id="hero-banner">
+        <div class="hero-content">
+          <span class="section-eyebrow">مرحباً بك في Laksen</span>
+          <h1>كل ألعابك المفضلة، في مكان واحد</h1>
+          <p>اختر لعبتك، حدّد باقتك، وتابع طلبك من حسابك بسهولة.</p>
+          <a class="button button-primary" href="#games">استعرض الألعاب</a>
+        </div>
+        <div class="hero-media">
+          <img src="assets/banners/main-banner.jpg" alt="صورة العرض الرئيسي">
+        </div>
+      </section>
+
+      <!-- شريط مختصر للمميزات -->
+      <section class="quick-benefits" aria-label="مميزات المنصة">
+        <article class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">⚡</span>
+          <h2>متابعة الطلب</h2>
+          <p>اعرف حالة طلبك من حسابك.</p>
+        </article>
+        <article class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">🔒</span>
+          <h2>حساب ومحفظة</h2>
+          <p>سجل واضح للرصيد والعمليات.</p>
+        </article>
+        <article class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">🎧</span>
+          <h2>الدعم الفني</h2>
+          <p>أرسل استفسارك عند الحاجة.</p>
+        </article>
+      </section>
+
+      <!-- ألعاب مختارة -->
+      <section class="content-section" id="featured-games">
+        <div class="section-heading">
+          <div>
+            <h2>الألعاب</h2>
+            <p>اختر اللعبة التي تريد شحنها.</p>
+          </div>
+          <a class="text-link" href="#games">عرض جميع الألعاب</a>
+        </div>
+
+        <div class="games-grid">
+          <article class="game-card" id="game-card-free-fire">
+            <a href="#game-free-fire">
+              <img src="image/free%20fire.jpg" alt="شعار Free Fire">
+              <h3>Free Fire</h3>
+              <p>جواهر فري فاير</p>
+            </a>
+          </article>
+
+          <article class="game-card" id="game-card-pubg">
+            <a href="#game-pubg">
+              <img src="image/Pobg%20mobile.jpg" alt="شعار PUBG Mobile">
+              <h3>PUBG Mobile</h3>
+              <p>شدات ببجي</p>
+            </a>
+          </article>
+
+          <article class="game-card" id="game-card-mobile-legends">
+            <a href="#game-mobile-legends">
+              <img src="image/clash%20of%20clans.jpg" alt="شعار Mobile Legends">
+              <h3>Clash of clans</h3>
+              <p>ماسات وباقات</p>
+            </a>
+          </article>
+
+          <article class="game-card" id="game-card-call-of-duty">
+            <a href="#game-call-of-duty">
+              <img src="image/code%20mobile.jpg" alt="شعار Call of Duty">
+              <h3>Call of Duty</h3>
+              <p>نقاط اللعبة</p>
+            </a>
+          </article>
+
+          <article class="game-card" id="game-card-roblox">
+            <a href="#game-roblox">
+              <img src="assets/games/roblox.png" alt="شعار Roblox">
+              <h3>Roblox</h3>
+              <p>Robux وبطاقات</p>
+            </a>
+          </article>
+
+          <article class="game-card" id="game-card-genshin">
+            <a href="#game-genshin">
+              <img src="assets/games/genshin-impact.png" alt="شعار Genshin Impact">
+              <h3>Genshin Impact</h3>
+              <p>باقات اللعبة</p>
+            </a>
+          </article>
+        </div>
+      </section>
+
+      <!-- العروض: أضف صورك داخل مجلد assets/banners -->
+      <section class="content-section" id="offers">
+        <div class="section-heading">
+          <div>
+            <h2>العروض</h2>
+            <p>أحدث الخصومات والباقات المميزة.</p>
+          </div>
+          <a class="text-link" href="#all-offers">كل العروض</a>
+        </div>
+
+        <div class="offers-grid">
+          <article class="offer-card">
+            <img src="assets/banners/offer-1.jpg" alt="صورة العرض الأول">
+            <div class="offer-content">
+              <h3>عرض مميز</h3>
+              <p>اكتب وصف العرض هنا.</p>
+              <a class="button button-small" href="#games">استكشف</a>
+            </div>
+          </article>
+
+          <article class="offer-card">
+            <img src="assets/banners/offer-2.jpg" alt="صورة العرض الثاني">
+            <div class="offer-content">
+              <h3>باقات مختارة</h3>
+              <p>اكتب وصف العرض هنا.</p>
+              <a class="button button-small" href="#games">استكشف</a>
+            </div>
+          </article>
+
+          <article class="offer-card">
+            <img src="assets/banners/offer-3.jpg" alt="صورة العرض الثالث">
+            <div class="offer-content">
+              <h3>خصومات جديدة</h3>
+              <p>اكتب وصف العرض هنا.</p>
+              <a class="button button-small" href="#games">استكشف</a>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- =====================================================
+         3) GAMES — جميع الألعاب
+         ===================================================== -->
+    <section class="page-section" id="games">
+      <header class="page-heading">
+        <h1>جميع الألعاب</h1>
+        <p>تصفّح الألعاب المتاحة واختر اللعبة المناسبة.</p>
+      </header>
+
+      <form class="search-form" action="#games" method="get">
+        <label class="visually-hidden" for="game-search">البحث عن لعبة</label>
+        <input class="form-control" id="game-search" name="game" type="search" placeholder="ابحث عن لعبة">
+        <button class="button button-primary" type="submit">بحث</button>
+      </form>
+
+      <div class="games-grid">
+        <article class="game-card"><a href="#game-free-fire"><img src="assets/games/free-fire.png" alt="Free Fire"><h2>Free Fire</h2></a></article>
+        <article class="game-card"><a href="#game-pubg"><img src="assets/games/pubg-mobile.png" alt="PUBG Mobile"><h2>PUBG Mobile</h2></a></article>
+        <article class="game-card"><a href="#game-mobile-legends"><img src="assets/games/mobile-legends.png" alt="Mobile Legends"><h2>Mobile Legends</h2></a></article>
+        <article class="game-card"><a href="#game-call-of-duty"><img src="assets/games/call-of-duty.png" alt="Call of Duty"><h2>Call of Duty</h2></a></article>
+        <article class="game-card"><a href="#game-roblox"><img src="assets/games/roblox.png" alt="Roblox"><h2>Roblox</h2></a></article>
+        <article class="game-card"><a href="#game-genshin"><img src="assets/games/genshin-impact.png" alt="Genshin Impact"><h2>Genshin Impact</h2></a></article>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         4) GAME DETAILS — قالب تفاصيل اللعبة والباقات
+         كل لعبة لها قسم مستقل حتى يسهل تعديلها
+         ===================================================== -->
+
+    <section class="page-section game-page" id="game-free-fire">
+      <a class="back-link" href="#games">العودة إلى الألعاب</a>
+      <header class="game-page-heading">
+        <img src="assets/games/free-fire-cover.jpg" alt="صورة Free Fire">
+        <div><span class="section-eyebrow">تفاصيل اللعبة</span><h1>Free Fire</h1><p>اختر باقة الجواهر ثم أدخل معرّف اللاعب.</p></div>
+      </header>
+      <h2>باقات الشحن</h2>
+      <div class="packages-grid">
+        <article class="package-card"><h3>100 جوهرة</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article>
+        <article class="package-card"><h3>310 جوهرة</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article>
+        <article class="package-card"><h3>520 جوهرة</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article>
+      </div>
+      <form class="player-form">
+        <label for="free-fire-player-id">Player ID</label>
+        <input class="form-control" id="free-fire-player-id" name="player_id" type="text" placeholder="أدخل معرّف اللاعب">
+        <button class="button button-primary" type="button">متابعة</button>
+      </form>
+    </section>
+
+    <section class="page-section game-page" id="game-pubg">
+      <a class="back-link" href="#games">العودة إلى الألعاب</a>
+      <header class="game-page-heading"><img src="assets/games/pubg-mobile-cover.jpg" alt="صورة PUBG Mobile"><div><span class="section-eyebrow">تفاصيل اللعبة</span><h1>PUBG Mobile</h1><p>اختر باقة الشدات وأدخل معرّف اللاعب.</p></div></header>
+      <h2>باقات الشحن</h2>
+      <div class="packages-grid">
+        <article class="package-card"><h3>60 UC</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article>
+        <article class="package-card"><h3>325 UC</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article>
+        <article class="package-card"><h3>660 UC</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article>
+      </div>
+      <form class="player-form"><label for="pubg-player-id">Player ID</label><input class="form-control" id="pubg-player-id" name="player_id" type="text" placeholder="أدخل معرّف اللاعب"><button class="button button-primary" type="button">متابعة</button></form>
+    </section>
+
+    <section class="page-section game-page" id="game-mobile-legends">
+      <a class="back-link" href="#games">العودة إلى الألعاب</a>
+      <header class="game-page-heading"><img src="assets/games/mobile-legends-cover.jpg" alt="صورة Mobile Legends"><div><span class="section-eyebrow">تفاصيل اللعبة</span><h1>Mobile Legends</h1><p>اختر الباقة المناسبة.</p></div></header>
+      <h2>باقات الشحن</h2>
+      <div class="packages-grid"><article class="package-card"><h3>باقة 1</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article><article class="package-card"><h3>باقة 2</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article></div>
+      <form class="player-form"><label for="ml-player-id">معرّف اللاعب</label><input class="form-control" id="ml-player-id" name="player_id" type="text" placeholder="أدخل معرّف اللاعب"><button class="button button-primary" type="button">متابعة</button></form>
+    </section>
+
+    <section class="page-section game-page" id="game-call-of-duty">
+      <a class="back-link" href="#games">العودة إلى الألعاب</a>
+      <header class="game-page-heading"><img src="assets/games/call-of-duty-cover.jpg" alt="صورة Call of Duty"><div><span class="section-eyebrow">تفاصيل اللعبة</span><h1>Call of Duty</h1><p>اختر باقة النقاط المناسبة.</p></div></header>
+      <h2>باقات الشحن</h2>
+      <div class="packages-grid"><article class="package-card"><h3>باقة 1</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article><article class="package-card"><h3>باقة 2</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article></div>
+      <form class="player-form"><label for="cod-player-id">معرّف اللاعب</label><input class="form-control" id="cod-player-id" name="player_id" type="text" placeholder="أدخل معرّف اللاعب"><button class="button button-primary" type="button">متابعة</button></form>
+    </section>
+
+    <section class="page-section game-page" id="game-roblox">
+      <a class="back-link" href="#games">العودة إلى الألعاب</a>
+      <header class="game-page-heading"><img src="assets/games/roblox-cover.jpg" alt="صورة Roblox"><div><span class="section-eyebrow">تفاصيل اللعبة</span><h1>Roblox</h1><p>اختر البطاقة أو الباقة المناسبة.</p></div></header>
+      <h2>الباقات</h2>
+      <div class="packages-grid"><article class="package-card"><h3>باقة 1</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article><article class="package-card"><h3>باقة 2</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article></div>
+      <form class="player-form"><label for="roblox-player-id">اسم المستخدم أو المعرّف</label><input class="form-control" id="roblox-player-id" name="player_id" type="text" placeholder="أدخل البيانات المطلوبة"><button class="button button-primary" type="button">متابعة</button></form>
+    </section>
+
+    <section class="page-section game-page" id="game-genshin">
+      <a class="back-link" href="#games">العودة إلى الألعاب</a>
+      <header class="game-page-heading"><img src="assets/games/genshin-impact-cover.jpg" alt="صورة Genshin Impact"><div><span class="section-eyebrow">تفاصيل اللعبة</span><h1>Genshin Impact</h1><p>اختر الباقة المناسبة.</p></div></header>
+      <h2>الباقات</h2>
+      <div class="packages-grid"><article class="package-card"><h3>باقة 1</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article><article class="package-card"><h3>باقة 2</h3><p class="package-price">السعر يضاف لاحقاً</p><button class="button button-secondary" type="button">اختيار الباقة</button></article></div>
+      <form class="player-form"><label for="genshin-player-id">معرّف اللاعب</label><input class="form-control" id="genshin-player-id" name="player_id" type="text" placeholder="أدخل معرّف اللاعب"><button class="button button-primary" type="button">متابعة</button></form>
+    </section>
+
+    <!-- =====================================================
+         5) CHECKOUT — مراجعة الطلب
+         ===================================================== -->
+    <section class="page-section" id="checkout">
+      <header class="page-heading"><h1>مراجعة الطلب</h1><p>تأكد من تفاصيل طلبك قبل التأكيد.</p></header>
+      <div class="content-card">
+        <h2>ملخص الطلب</h2>
+        <dl class="summary-list">
+          <div><dt>اللعبة</dt><dd>تُعرض اللعبة المختارة</dd></div>
+          <div><dt>الباقة</dt><dd>تُعرض الباقة المختارة</dd></div>
+          <div><dt>معرّف اللاعب</dt><dd>يُعرض المعرّف المدخل</dd></div>
+          <div><dt>السعر</dt><dd>يُحسب لاحقاً</dd></div>
+          <div><dt>الإجمالي</dt><dd>يُحسب لاحقاً</dd></div>
+        </dl>
+        <h2>طريقة الدفع</h2>
+        <label class="choice-row"><input type="radio" name="payment" value="wallet"> رصيد المحفظة</label>
+        <label class="choice-row"><input type="radio" name="payment" value="usdt"> USDT</label>
+        <button class="button button-primary" type="button">تأكيد الطلب</button>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         6) AUTHENTICATION — تسجيل الدخول وإنشاء الحساب
+         ===================================================== -->
+    <section class="page-section auth-page" id="login">
+      <div class="content-card auth-card">
+        <h1>تسجيل الدخول</h1>
+        <p>أدخل بيانات حسابك للمتابعة.</p>
+        <form class="form-stack">
+          <label for="login-email">البريد الإلكتروني</label>
+          <input class="form-control" id="login-email" name="email" type="email" autocomplete="email" placeholder="البريد الإلكتروني">
+          <label for="login-password">كلمة المرور</label>
+          <input class="form-control" id="login-password" name="password" type="password" autocomplete="current-password" placeholder="كلمة المرور">
+          <a href="#forgot-password">نسيت كلمة المرور؟</a>
+          <button class="button button-primary" type="submit">دخول</button>
+        </form>
+        <p>ليس لديك حساب؟ <a href="#register">إنشاء حساب</a></p>
+      </div>
+    </section>
+
+    <section class="page-section auth-page" id="register">
+      <div class="content-card auth-card">
+        <h1>إنشاء حساب جديد</h1>
+        <p>أنشئ حساباً لمتابعة طلباتك ومحفظتك.</p>
+        <form class="form-stack">
+          <label for="register-name">الاسم</label>
+          <input class="form-control" id="register-name" name="name" type="text" autocomplete="name" placeholder="الاسم">
+          <label for="register-email">البريد الإلكتروني</label>
+          <input class="form-control" id="register-email" name="email" type="email" autocomplete="email" placeholder="البريد الإلكتروني">
+          <label for="register-password">كلمة المرور</label>
+          <input class="form-control" id="register-password" name="password" type="password" autocomplete="new-password" placeholder="كلمة المرور">
+          <label for="register-password-confirm">تأكيد كلمة المرور</label>
+          <input class="form-control" id="register-password-confirm" name="password_confirm" type="password" autocomplete="new-password" placeholder="تأكيد كلمة المرور">
+          <button class="button button-primary" type="submit">إنشاء الحساب</button>
+        </form>
+        <p>لديك حساب؟ <a href="#login">تسجيل الدخول</a></p>
+      </div>
+    </section>
+
+    <section class="page-section auth-page" id="forgot-password">
+      <div class="content-card auth-card">
+        <h1>استعادة كلمة المرور</h1>
+        <p>أدخل بريدك الإلكتروني لاستعادة حسابك.</p>
+        <form class="form-stack">
+          <label for="recovery-email">البريد الإلكتروني</label>
+          <input class="form-control" id="recovery-email" name="email" type="email" placeholder="البريد الإلكتروني">
+          <button class="button button-primary" type="submit">إرسال رابط الاستعادة</button>
+        </form>
+        <a href="#login">العودة لتسجيل الدخول</a>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         7) WALLET — المحفظة والإيداع والسحب
+         ===================================================== -->
+    <section class="page-section" id="wallet">
+      <header class="page-heading"><h1>محفظتي</h1><p>عرض الرصيد ومتابعة حركات المحفظة.</p></header>
+      <section class="wallet-balance">
+        <span>الرصيد المتاح</span>
+        <strong>0.00 <small>USDT</small></strong>
+        <div class="wallet-buttons">
+          <a class="button button-primary" href="#deposit">إيداع رصيد</a>
+          <a class="button button-secondary" href="#withdraw">سحب رصيد</a>
+        </div>
+      </section>
+      <div class="statistics-grid">
+        <article class="stat-card"><span>إجمالي الإيداعات</span><strong>0.00 USDT</strong></article>
+        <article class="stat-card"><span>إجمالي المشتريات</span><strong>0.00 USDT</strong></article>
+        <article class="stat-card"><span>إجمالي السحوبات</span><strong>0.00 USDT</strong></article>
+      </div>
+      <section class="content-section">
+        <div class="section-heading"><h2>آخر الحركات</h2><a href="#transactions">السجل الكامل</a></div>
+        <div class="table-wrapper">
+          <table class="data-table">
+            <thead><tr><th>العملية</th><th>المبلغ</th><th>الحالة</th><th>التاريخ</th></tr></thead>
+            <tbody><tr><td colspan="4">لا توجد حركات حتى الآن.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </section>
+
+    <section class="page-section" id="deposit">
+      <header class="page-heading"><h1>إيداع رصيد</h1><p>أرسل طلب إيداع بعد اختيار الشبكة.</p></header>
+      <div class="content-card">
+        <form class="form-stack">
+          <label for="deposit-amount">مبلغ الإيداع</label>
+          <input class="form-control" id="deposit-amount" name="amount" type="number" min="0" step="0.01" placeholder="المبلغ">
+          <label for="deposit-network">شبكة التحويل</label>
+          <select class="form-control" id="deposit-network" name="network"><option value="">اختر الشبكة</option><option value="TRC20">TRC20</option><option value="BEP20">BEP20</option></select>
+          <span class="field-label">عنوان الإيداع</span>
+          <div class="address-placeholder">سيظهر عنوان الإيداع بعد إعداد الإدارة.</div>
+          <label for="deposit-txid">رقم المعاملة TXID</label>
+          <input class="form-control" id="deposit-txid" name="txid" type="text" placeholder="رقم المعاملة">
+          <label for="deposit-proof">إثبات التحويل</label>
+          <input class="form-control" id="deposit-proof" name="proof" type="file" accept="image/*">
+          <button class="button button-primary" type="submit">إرسال طلب الإيداع</button>
+        </form>
+        <p class="form-note">هذه واجهة HTML فقط؛ لا تحول أموالاً قبل إعداد عنوان دفع موثوق والتحقق منه.</p>
+      </div>
+    </section>
+
+    <section class="page-section" id="withdraw">
+      <header class="page-heading"><h1>سحب رصيد</h1><p>أدخل بيانات المحفظة المستقبلة.</p></header>
+      <div class="content-card">
+        <form class="form-stack">
+          <label for="withdraw-amount">مبلغ السحب</label>
+          <input class="form-control" id="withdraw-amount" name="amount" type="number" min="0" step="0.01" placeholder="المبلغ">
+          <label for="withdraw-network">شبكة السحب</label>
+          <select class="form-control" id="withdraw-network" name="network"><option value="">اختر الشبكة</option><option value="TRC20">TRC20</option><option value="BEP20">BEP20</option></select>
+          <label for="withdraw-address">عنوان المحفظة</label>
+          <input class="form-control" id="withdraw-address" name="address" type="text" placeholder="عنوان المحفظة">
+          <button class="button button-primary" type="submit">إرسال طلب السحب</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         8) USER ORDERS & TRANSACTIONS
+         ===================================================== -->
+    <section class="page-section" id="my-orders">
+      <header class="page-heading"><h1>طلباتي</h1><p>تابع جميع طلبات الشحن وحالاتها.</p></header>
+      <nav class="filter-navigation" aria-label="تصفية الطلبات">
+        <a href="#my-orders">الكل</a><a href="#my-orders">قيد المعالجة</a><a href="#my-orders">مكتملة</a><a href="#my-orders">ملغاة</a>
+      </nav>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>رقم الطلب</th><th>اللعبة</th><th>الباقة</th><th>المبلغ</th><th>الحالة</th><th>التاريخ</th></tr></thead>
+          <tbody><tr><td colspan="6">لا توجد طلبات حتى الآن.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="page-section" id="transactions">
+      <header class="page-heading"><h1>سجل المعاملات</h1><p>سجل الإيداع والسحب والشراء والاسترداد.</p></header>
+      <div class="filter-bar">
+        <label for="transaction-type">نوع العملية</label>
+        <select class="form-control" id="transaction-type"><option value="all">كل العمليات</option><option value="deposit">إيداع</option><option value="withdraw">سحب</option><option value="purchase">شراء</option><option value="refund">استرداد</option></select>
+        <label for="transaction-date">التاريخ</label>
+        <input class="form-control" id="transaction-date" type="date">
+      </div>
+      <div class="table-wrapper">
+        <table class="data-table">
+          <thead><tr><th>رقم المعاملة</th><th>النوع</th><th>المبلغ</th><th>الرصيد بعد العملية</th><th>الحالة</th><th>التاريخ</th></tr></thead>
+          <tbody><tr><td colspan="6">لا توجد معاملات حتى الآن.</td></tr></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         9) SUPPORT — الدعم والتذاكر
+         ===================================================== -->
+    <section class="page-section" id="support">
+      <header class="page-heading"><h1>الدعم الفني</h1><p>أرسل استفسارك أو بلّغ عن مشكلة.</p></header>
+      <div class="content-card">
+        <form class="form-stack">
+          <label for="support-category">نوع المشكلة</label>
+          <select class="form-control" id="support-category" name="category">
+            <option value="">اختر القسم</option><option value="order">طلب شحن</option><option value="payment">الدفع</option><option value="wallet">المحفظة</option><option value="account">الحساب</option><option value="other">أخرى</option>
+          </select>
+          <label for="support-subject">عنوان الرسالة</label>
+          <input class="form-control" id="support-subject" name="subject" type="text" placeholder="عنوان المشكلة">
+          <label for="support-message">تفاصيل الرسالة</label>
+          <textarea class="form-control" id="support-message" name="message" rows="6" placeholder="اكتب تفاصيل المشكلة"></textarea>
+          <label for="support-file">مرفق اختياري</label>
+          <input class="form-control" id="support-file" name="attachment" type="file">
+          <button class="button button-primary" type="submit">إرسال التذكرة</button>
+        </form>
+      </div>
+      <p><a href="#support-tickets">عرض تذاكر الدعم السابقة</a></p>
+    </section>
+
+    <section class="page-section" id="support-tickets">
+      <header class="page-heading"><h1>تذاكر الدعم</h1><p>متابعة التذاكر والردود.</p></header>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>رقم التذكرة</th><th>العنوان</th><th>القسم</th><th>الحالة</th><th>آخر تحديث</th></tr></thead><tbody><tr><td colspan="5">لا توجد تذاكر حتى الآن.</td></tr></tbody></table></div>
+    </section>
+
+    <!-- =====================================================
+         10) AGENT — صفحات الوكيل
+         ===================================================== -->
+    <section class="page-section" id="agent-dashboard">
+      <header class="page-heading"><h1>لوحة الوكيل</h1><p>نظرة عامة على حساب الوكيل.</p></header>
+      <div class="statistics-grid">
+        <article class="stat-card"><span>رصيد الوكيل</span><strong>0.00 USDT</strong></article>
+        <article class="stat-card"><span>إجمالي الطلبات</span><strong>0</strong></article>
+        <article class="stat-card"><span>العمولات</span><strong>0.00 USDT</strong></article>
+        <article class="stat-card"><span>طلبات قيد المعالجة</span><strong>0</strong></article>
+      </div>
+      <div class="dashboard-links">
+        <a class="dashboard-link" href="#agent-orders">طلبات الوكيل</a>
+        <a class="dashboard-link" href="#agent-transactions">سجل العمليات</a>
+        <a class="dashboard-link" href="#agent-profile">بيانات الوكيل</a>
+      </div>
+    </section>
+
+    <section class="page-section" id="agent-orders">
+      <header class="page-heading"><h1>طلبات الوكيل</h1><p>طلبات العملاء المرتبطة بالوكيل.</p></header>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>رقم الطلب</th><th>العميل</th><th>اللعبة</th><th>المبلغ</th><th>الحالة</th></tr></thead><tbody><tr><td colspan="5">لا توجد طلبات.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="agent-transactions">
+      <header class="page-heading"><h1>سجل عمليات الوكيل</h1><p>متابعة حركة الرصيد والعمولات.</p></header>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>رقم العملية</th><th>الوصف</th><th>المبلغ</th><th>التاريخ</th></tr></thead><tbody><tr><td colspan="4">لا توجد عمليات.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="agent-profile">
+      <header class="page-heading"><h1>بيانات الوكيل</h1><p>معلومات الحساب وحالة التفعيل.</p></header>
+      <div class="content-card">
+        <dl class="summary-list">
+          <div><dt>اسم الوكيل</dt><dd>يظهر بعد تسجيل الدخول</dd></div>
+          <div><dt>رقم الوكيل</dt><dd>يظهر بعد التفعيل</dd></div>
+          <div><dt>حالة الحساب</dt><dd>غير محددة</dd></div>
+          <div><dt>مستوى الوكيل</dt><dd>غير محدد</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         11) ADMIN — لوحة الإدارة
+         ===================================================== -->
+    <section class="page-section" id="admin-dashboard">
+      <header class="page-heading"><h1>لوحة الإدارة</h1><p>إدارة المنصة ومراجعة نشاطها.</p></header>
+      <div class="statistics-grid">
+        <article class="stat-card"><span>المستخدمون</span><strong>0</strong></article>
+        <article class="stat-card"><span>الطلبات</span><strong>0</strong></article>
+        <article class="stat-card"><span>طلبات تحتاج مراجعة</span><strong>0</strong></article>
+        <article class="stat-card"><span>إجمالي المبيعات</span><strong>0.00 USDT</strong></article>
+      </div>
+      <div class="admin-links">
+        <a class="admin-link" href="#admin-orders"><h2>إدارة الطلبات</h2><p>مراجعة الطلبات وتحديث حالاتها.</p></a>
+        <a class="admin-link" href="#admin-users"><h2>إدارة المستخدمين</h2><p>عرض الحسابات والأدوار.</p></a>
+        <a class="admin-link" href="#admin-games"><h2>إدارة الألعاب</h2><p>إضافة الألعاب وتعديل بياناتها.</p></a>
+        <a class="admin-link" href="#admin-packages"><h2>إدارة الباقات</h2><p>تحديد الباقات والأسعار.</p></a>
+        <a class="admin-link" href="#admin-offers"><h2>إدارة العروض</h2><p>تغيير صور ومحتوى العروض.</p></a>
+        <a class="admin-link" href="#admin-payments"><h2>إعدادات الدفع</h2><p>إعداد وسائل الدفع والشبكات.</p></a>
+        <a class="admin-link" href="#admin-agents"><h2>إدارة الوكلاء</h2><p>تفعيل الوكلاء ومراجعة حساباتهم.</p></a>
+        <a class="admin-link" href="#admin-support"><h2>تذاكر الدعم</h2><p>متابعة رسائل المستخدمين.</p></a>
+      </div>
+    </section>
+
+    <section class="page-section" id="admin-orders">
+      <header class="page-heading"><h1>إدارة الطلبات</h1><p>مراجعة الطلبات وتحديث حالاتها.</p></header>
+      <div class="filter-bar"><label for="admin-order-status">الحالة</label><select class="form-control" id="admin-order-status"><option>كل الحالات</option><option>جديد</option><option>قيد المعالجة</option><option>مكتمل</option><option>مرفوض</option><option>ملغي</option></select></div>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>رقم الطلب</th><th>المستخدم</th><th>اللعبة</th><th>الباقة</th><th>المبلغ</th><th>الحالة</th><th>التاريخ</th><th>إجراء</th></tr></thead><tbody><tr><td colspan="8">لا توجد طلبات.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="admin-users">
+      <header class="page-heading"><h1>إدارة المستخدمين</h1><p>عرض الحسابات وإدارة صلاحياتها.</p></header>
+      <div class="search-form"><label class="visually-hidden" for="admin-user-search">البحث عن مستخدم</label><input class="form-control" id="admin-user-search" type="search" placeholder="البحث بالبريد أو رقم المستخدم"></div>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>رقم المستخدم</th><th>الاسم</th><th>البريد الإلكتروني</th><th>الدور</th><th>الحالة</th><th>تاريخ التسجيل</th></tr></thead><tbody><tr><td colspan="6">لا يوجد مستخدمون للعرض.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="admin-games">
+      <header class="page-heading"><h1>إدارة الألعاب</h1><p>إضافة الألعاب وتعديل صورها وبياناتها.</p></header>
+      <form class="content-card form-stack">
+        <label for="new-game-name">اسم اللعبة</label><input class="form-control" id="new-game-name" type="text" placeholder="اسم اللعبة">
+        <label for="new-game-logo">مسار أو رابط شعار اللعبة</label><input class="form-control" id="new-game-logo" type="text" placeholder="assets/games/game-logo.png">
+        <label for="new-game-cover">مسار أو رابط صورة الغلاف</label><input class="form-control" id="new-game-cover" type="text" placeholder="assets/games/game-cover.jpg">
+        <label for="new-game-description">وصف اللعبة</label><textarea class="form-control" id="new-game-description" rows="3" placeholder="وصف مختصر"></textarea>
+        <button class="button button-primary" type="button">إضافة اللعبة</button>
+      </form>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>اللعبة</th><th>الشعار</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody><tr><td colspan="4">لا توجد بيانات ألعاب محفوظة بعد.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="admin-packages">
+      <header class="page-heading"><h1>إدارة الباقات والأسعار</h1><p>ربط كل باقة بلعبتها وسعرها وعملتها.</p></header>
+      <form class="content-card form-stack">
+        <label for="package-game">اللعبة</label><select class="form-control" id="package-game"><option value="">اختر اللعبة</option></select>
+        <label for="package-name">اسم الباقة</label><input class="form-control" id="package-name" type="text" placeholder="مثال: 100 جوهرة">
+        <label for="package-price">السعر</label><input class="form-control" id="package-price" type="number" min="0" step="0.01" placeholder="السعر">
+        <label for="package-currency">العملة</label><select class="form-control" id="package-currency"><option value="USDT">USDT</option><option value="SDG">SDG</option></select>
+        <button class="button button-primary" type="button">إضافة الباقة</button>
+      </form>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>اللعبة</th><th>الباقة</th><th>السعر</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody><tr><td colspan="5">لا توجد باقات.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="admin-offers">
+      <header class="page-heading"><h1>إدارة العروض</h1><p>تحديد صور البنرات ومحتوى العروض.</p></header>
+      <form class="content-card form-stack">
+        <label for="offer-title">عنوان العرض</label><input class="form-control" id="offer-title" type="text" placeholder="عنوان العرض">
+        <label for="offer-description">وصف العرض</label><textarea class="form-control" id="offer-description" rows="3" placeholder="وصف العرض"></textarea>
+        <label for="offer-image">مسار أو رابط الصورة</label><input class="form-control" id="offer-image" type="text" placeholder="assets/banners/offer.jpg">
+        <label for="offer-link">وجهة العرض</label><input class="form-control" id="offer-link" type="text" placeholder="#games">
+        <button class="button button-primary" type="button">إضافة العرض</button>
+      </form>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>العرض</th><th>الصورة</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody><tr><td colspan="4">لا توجد عروض محفوظة.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="admin-payments">
+      <header class="page-heading"><h1>إعدادات الدفع</h1><p>إعداد وسائل الدفع وعناوين الشبكات.</p></header>
+      <form class="content-card form-stack">
+        <label for="payment-method-name">اسم وسيلة الدفع</label><input class="form-control" id="payment-method-name" type="text" placeholder="اسم الوسيلة">
+        <label for="payment-network-name">الشبكة</label><select class="form-control" id="payment-network-name"><option value="">اختر الشبكة</option><option value="TRC20">TRC20</option><option value="BEP20">BEP20</option></select>
+        <label for="payment-wallet-address">عنوان الاستقبال</label><input class="form-control" id="payment-wallet-address" type="text" placeholder="عنوان المحفظة">
+        <label for="payment-instructions">تعليمات الدفع</label><textarea class="form-control" id="payment-instructions" rows="4" placeholder="تعليمات للمستخدم"></textarea>
+        <button class="button button-primary" type="button">حفظ إعدادات الدفع</button>
+      </form>
+      <p class="form-note">لا تضع مفاتيح سرية أو بيانات حساسة في HTML؛ إعدادات الدفع الفعلية يجب أن تُدار من الخادم.</p>
+    </section>
+
+    <section class="page-section" id="admin-agents">
+      <header class="page-heading"><h1>إدارة الوكلاء</h1><p>مراجعة طلبات الوكالة وإدارة حسابات الوكلاء.</p></header>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>الوكيل</th><th>رقم الحساب</th><th>الرصيد</th><th>العمولة</th><th>الحالة</th><th>إجراء</th></tr></thead><tbody><tr><td colspan="6">لا يوجد وكلاء.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="page-section" id="admin-support">
+      <header class="page-heading"><h1>إدارة الدعم</h1><p>مراجعة تذاكر المستخدمين والرد عليها.</p></header>
+      <div class="table-wrapper"><table class="data-table"><thead><tr><th>رقم التذكرة</th><th>المستخدم</th><th>العنوان</th><th>الأولوية</th><th>الحالة</th><th>آخر تحديث</th></tr></thead><tbody><tr><td colspan="6">لا توجد تذاكر.</td></tr></tbody></table></div>
+    </section>
+
+    <!-- =====================================================
+         12) FOOTER — تذييل الموقع
+         ===================================================== -->
+    <footer class="site-footer" id="site-footer">
+      <div class="footer-brand">
+        <img src="assets/logos/laksen-logo.png" alt="Laksen">
+        <span>Laksen</span>
+        <p>منصة واحدة لشحن ألعابك ومتابعة طلباتك.</p>
+      </div>
+      <nav class="footer-navigation" aria-label="روابط الموقع">
+        <a href="#home">الرئيسية</a>
+        <a href="#games">الألعاب</a>
+        <a href="#support">الدعم</a>
+        <a href="#login">تسجيل الدخول</a>
+        <a href="#register">إنشاء حساب</a>
+      </nav>
+      <div class="footer-legal">
+        <a href="#terms">الشروط والأحكام</a>
+        <a href="#privacy">سياسة الخصوصية</a>
+        <p>© Laksen — جميع الحقوق محفوظة.</p>
+      </div>
+    </footer>
+
+    <!-- صفحات السياسات -->
+    <section class="page-section legal-page" id="terms">
+      <header class="page-heading"><h1>الشروط والأحكام</h1></header>
+      <div class="content-card"><p>يوضع هنا النص النهائي لشروط استخدام المنصة بعد مراجعته واعتماده.</p></div>
+    </section>
+
+    <section class="page-section legal-page" id="privacy">
+      <header class="page-heading"><h1>سياسة الخصوصية</h1></header>
+      <div class="content-card"><p>يوضع هنا النص النهائي لسياسة الخصوصية بعد تحديد البيانات التي تجمعها المنصة وكيفية استخدامها وحمايتها.</p></div>
+    </section>
+
+  </main>
+</body>
+</html>
