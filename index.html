@@ -1,162 +1,477 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#10120f">
-  <meta name="description" content="Katshr Sensitivity - أداة اقتراح إعدادات حساسية Free Fire حسب مواصفات هاتفك.">
-  <title>Katshr Sensitivity | Free Fire</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Paylit - منصة شحن فري فاير</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+/* ========== style.css ==========
+   كل تنسيقات الموقع. الألوان بالأعلى في :root */
+
+/* ===== الألوان (غيّر هنا لتتغير ألوان الموقع كله) ===== */
+:root{--bg:#090a0f;--panel:#13151f;--panel2:#191c2b;--line:#1f2333;--line2:#282d42;--txt:#fff;--mut:#94a3b8;--cy:#00d2ff;--bl:#3a7bd5;--gr:#00ff88;--rd:#ef4444;--gold:#ffca28}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Cairo','Segoe UI',Tahoma,sans-serif}
+body{background:radial-gradient(900px 400px at 50% -100px,rgba(0,210,255,.12),transparent),var(--bg);color:var(--txt);min-height:100vh;padding-bottom:80px}
+button:focus-visible,input:focus-visible,a:focus-visible,textarea:focus-visible{outline:2px solid var(--cy);outline-offset:2px}
+.wrap{max-width:1050px;margin:0 auto;padding:14px}
+.logo{display:flex;align-items:center;gap:10px}
+.mark{width:40px;height:40px;background:linear-gradient(135deg,var(--cy),var(--bl));border-radius:12px;display:grid;place-items:center;font-weight:800;font-size:22px;color:#000;box-shadow:0 0 14px rgba(0,210,255,.4)}
+.name{font-size:24px;font-weight:800}.name span{color:var(--cy)}
+/* ===== صفحة الدخول والتسجيل ===== */
+#auth{min-height:100vh;display:grid;place-items:center;padding:16px}
+.auth-box{width:100%;max-width:420px;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:28px;box-shadow:0 10px 40px rgba(0,0,0,.6)}
+.auth-box .logo{justify-content:center;margin-bottom:18px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;background:var(--bg);border-radius:12px;padding:4px;margin-bottom:20px}
+.tabs button{background:none;border:0;color:var(--mut);padding:10px;border-radius:9px;font-weight:600;cursor:pointer;font-size:14px}
+.tabs button.on{background:var(--panel2);color:var(--cy)}
+.fg{margin-bottom:14px}
+label{display:block;margin-bottom:6px;font-weight:600;font-size:13px;color:var(--mut)}
+input,textarea,select{width:100%;padding:13px;background:var(--bg);border:1px solid var(--line2);color:#fff;border-radius:12px;font-size:15px;transition:.2s}
+input:focus,textarea:focus{border-color:var(--cy);box-shadow:0 0 10px rgba(0,210,255,.2);outline:none}
+textarea{resize:vertical;min-height:90px}
+.err{color:var(--rd);font-size:12px;min-height:16px;margin-bottom:8px}
+.btn{width:100%;background:linear-gradient(135deg,var(--cy),var(--bl));color:#001018;border:0;padding:14px;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 20px rgba(0,210,255,.3);transition:.2s}
+.btn:hover{filter:brightness(1.08)}.btn:disabled{opacity:.5;cursor:not-allowed}
+.btn.ghost{background:var(--panel2);color:var(--cy);border:1px solid var(--line2);box-shadow:none}
+.btn.danger{background:rgba(239,68,68,.1);color:var(--rd);border:1px solid rgba(239,68,68,.3);box-shadow:none}
+/* ===== الهيدر والتنقل ===== */
+header{background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:50}
+header .in{max-width:1050px;margin:0 auto;padding:10px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+nav.top{display:none;gap:4px}
+nav a,.bottom a{color:var(--mut);text-decoration:none;font-weight:600;font-size:14px;cursor:pointer}
+nav.top a{padding:9px 14px;border-radius:10px}
+nav a.on{color:var(--cy);background:rgba(0,210,255,.08)}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:var(--panel);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(5,1fr);padding:6px 4px calc(6px + env(safe-area-inset-bottom,0px));z-index:50}
+.bottom a{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:11px;padding:6px 0}
+.bottom a i{font-size:18px}.bottom a.on{color:var(--cy)}
+@media(min-width:760px){nav.top{display:flex}.bottom{display:none}body{padding-bottom:20px}}
+.bal{display:flex;align-items:center;gap:6px;background:rgba(0,255,136,.08);border:1px solid rgba(0,255,136,.25);padding:5px 12px;border-radius:20px;font-weight:800;color:var(--gr);font-size:14px}
+.coin{width:18px;height:18px;background:var(--gold);color:#000;border-radius:50%;display:inline-grid;place-items:center;font-size:11px;font-weight:800}
+/* ===== الصفحات والبطاقات ===== */
+.page{display:none}.page.on{display:block}
+.card{background:var(--panel);padding:22px;border-radius:16px;border:1px solid var(--line);margin-bottom:16px}
+h2{font-size:20px;margin:6px 0 16px}
+h3{color:var(--cy);margin-bottom:16px;font-size:17px;display:flex;align-items:center;gap:10px}
+.hero{background:linear-gradient(135deg,rgba(0,210,255,.15),rgba(58,123,213,.05));border:1px solid var(--line2);border-radius:18px;padding:22px;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.hero h1{font-size:22px;font-weight:800}.hero p{color:var(--mut);font-size:13px;margin-top:4px}
+.hero .btn{width:auto;padding:10px 18px;font-size:14px}
+.grid{display:grid;gap:16px}
+@media(min-width:850px){.grid.two{grid-template-columns:1.8fr 1.2fr}.grid.three{grid-template-columns:repeat(3,1fr)}}
+.pk{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+@media(min-width:600px){.pk{grid-template-columns:repeat(3,1fr)}}
+.pc{background:var(--panel2);border:1px solid var(--line2);border-radius:14px;padding:14px 8px;text-align:center;cursor:pointer;transition:.2s;position:relative}
+.pc:hover{border-color:var(--cy);transform:translateY(-2px)}
+.pc.sel{background:rgba(0,210,255,.1);border-color:var(--cy);box-shadow:0 0 12px rgba(0,210,255,.25)}
+.pc i{font-size:22px;color:var(--cy);margin-bottom:6px}.pc .t{font-size:14px;font-weight:700}
+.pc .p{font-size:12px;color:var(--gr);font-weight:800;display:flex;justify-content:center;align-items:center;gap:4px;margin-top:4px}
+.pc .tag{position:absolute;top:-8px;left:8px;background:var(--gold);color:#000;font-size:10px;font-weight:800;padding:2px 8px;border-radius:10px}
+.sum{display:flex;justify-content:space-between;font-size:13px;color:var(--mut);padding:8px 0;border-bottom:1px dashed var(--line2)}
+.sum b{color:#fff}
+.row{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:12px;border-bottom:1px solid var(--line);font-size:13px}
+.row:last-child{border:0}.row small{color:var(--mut);display:block;margin-top:2px}
+.st{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:800}
+.st.ok{background:rgba(0,255,136,.12);color:var(--gr)}.st.no{background:rgba(239,68,68,.12);color:var(--rd)}
+.empty{text-align:center;color:#64748b;padding:30px 10px;font-size:13px}.empty i{font-size:30px;display:block;margin-bottom:8px}
+.stat{text-align:center}.stat b{display:block;font-size:24px;color:var(--cy)}.stat span{font-size:12px;color:var(--mut)}
+details{background:var(--panel2);border:1px solid var(--line2);border-radius:12px;margin-bottom:10px;padding:14px}
+summary{cursor:pointer;font-weight:700;font-size:14px}details p{color:var(--mut);font-size:13px;margin-top:10px;line-height:1.9}
+.terms h4{color:var(--cy);margin:16px 0 6px;font-size:15px}.terms p{color:var(--mut);font-size:13px;line-height:2}
+/* ===== النوافذ المنبثقة والرسائل ===== */
+.ov{position:fixed;inset:0;background:rgba(0,0,0,.85);backdrop-filter:blur(5px);display:none;justify-content:center;align-items:center;z-index:100;padding:16px}
+.md{background:var(--panel2);width:100%;max-width:380px;padding:24px;border-radius:18px;text-align:center;border:1px solid var(--line2)}
+.mi{font-size:46px;margin-bottom:10px}.mi.s{color:var(--gr)}.mi.e{color:var(--rd)}.mi.l{color:var(--cy)}
+.mt{font-size:18px;font-weight:800;margin-bottom:10px}
+.rc{background:var(--bg);border:1px solid var(--line2);border-radius:12px;padding:12px;margin-bottom:14px;text-align:right;font-size:12px;display:none}
+.rc div{display:flex;justify-content:space-between;margin-bottom:6px}.rc span:first-child{color:var(--mut)}
+#toast{position:fixed;top:70px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--cy);padding:10px 18px;border-radius:12px;font-size:13px;z-index:200;display:none}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+
+</style>
 </head>
 <body>
-  <div class="ambient ambient-one"></div>
-  <div class="ambient ambient-two"></div>
 
-  <header class="topbar">
-    <a href="#" class="brand" aria-label="Katshr Sensitivity">
-      <span class="brand-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.8"/><path d="M12 1.5V5M12 19V22.5M1.5 12H5M19 12H22.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
-      <span class="brand-text">KATSHR<span>SENSITIVITY</span></span>
-    </a>
-    <div class="game-label"><span class="live-dot"></span> FREE FIRE</div>
-  </header>
+<!-- ===== الدخول / التسجيل ===== -->
+<div id="auth">
+ <div class="auth-box">
+  <div class="logo"><div class="mark">P</div><div class="name">Pay<span>lit</span></div></div>
+  <div class="tabs"><button class="on" id="tabL" onclick="authTab('l')">تسجيل الدخول</button><button id="tabR" onclick="authTab('r')">حساب جديد</button></div>
+  <div class="fg" id="fgName" style="display:none"><label>اسم المستخدم</label><input id="aName" placeholder="مثال: player_alex" autocomplete="username"></div>
+  <div class="fg"><label>البريد الإلكتروني</label><input id="aMail" type="email" placeholder="name@example.com" autocomplete="email"></div>
+  <div class="fg"><label>كلمة المرور</label><input id="aPass" type="password" placeholder="6 أحرف على الأقل" autocomplete="current-password"></div>
+  <div class="fg" id="fgPass2" style="display:none"><label>تأكيد كلمة المرور</label><input id="aPass2" type="password" placeholder="أعد كتابة كلمة المرور"></div>
+  <div class="err" id="aErr"></div>
+  <button class="btn" id="aBtn" onclick="submitAuth()"><i class="fa-solid fa-right-to-bracket"></i> دخول</button>
+ </div>
+</div>
 
-  <main class="main-content">
-    <section class="hero">
-      <div class="eyebrow"><span class="eyebrow-line"></span> SMART DEVICE ANALYSIS</div>
-      <h1>حساسية تناسب <span>جهازك.</span></h1>
-      <p class="hero-description">اختر هاتفك، ودع الأداة تجمع معلوماته المتاحة وتجهّز لك إعدادات مقترحة للعبة Free Fire.</p>
-    </section>
+<!-- ===== التطبيق ===== -->
+<div id="app" style="display:none">
+ <header><div class="in">
+  <div class="logo"><div class="mark">P</div><div class="name">Pay<span>lit</span></div></div>
+  <nav class="top" id="navTop"><a data-p="home" class="on">الرئيسية</a><a data-p="orders">طلباتي</a><a data-p="profile">حسابي</a><a data-p="help">الدعم</a><a data-p="terms">الشروط</a></nav>
+  <div class="bal"><span class="coin">P</span><span id="bal">2,500</span> نقطة</div>
+ </div></header>
 
-    <section class="generator-card">
-      <div class="card-heading">
-        <div>
-          <span class="step-label">DEVICE CONFIGURATION</span>
-          <h2>إعداد جهازك</h2>
-        </div>
-        <div class="device-icon"><svg viewBox="0 0 24 24" fill="none"><rect x="6" y="2" width="12" height="20" rx="2.5" stroke="currentColor" stroke-width="1.7"/><path d="M10 5H14M11 18.5H13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></div>
-      </div>
+ <div class="wrap">
 
-      <div class="form-group">
-        <label for="brandSelect">الشركة المصنّعة <span>01</span></label>
-        <div class="select-wrap">
-          <select id="brandSelect" required>
-            <option value="">اختر شركة هاتفك</option>
-          </select>
-          <svg viewBox="0 0 24 24" fill="none"><path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label for="modelSelect">موديل الهاتف <span>02</span></label>
-        <div class="select-wrap">
-          <select id="modelSelect" disabled required>
-            <option value="">اختر الشركة أولًا</option>
-          </select>
-          <svg viewBox="0 0 24 24" fill="none"><path d="m7 10 5 5 5-5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-        <p class="field-hint" id="modelHint">اختر الشركة لعرض الموديلات المتاحة.</p>
-      </div>
-
-      <div class="form-group">
-        <label for="modelSearch">أو ابحث عن هاتفك</label>
-        <div class="search-wrap">
-          <svg viewBox="0 0 24 24" fill="none"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="1.7"/><path d="m16 16 4.5 4.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-          <input id="modelSearch" type="search" placeholder="مثال: Galaxy A15 أو iPhone 13" autocomplete="off">
-        </div>
-        <div id="searchResults" class="search-results hidden"></div>
-      </div>
-
-      <div class="form-group">
-        <label for="gameStyle">أسلوب اللعب</label>
-        <div class="style-options">
-          <label class="style-option selected">
-            <input type="radio" name="gameStyle" value="balanced" checked>
-            <span class="style-symbol">◎</span>
-            <span>متوازن</span>
-          </label>
-          <label class="style-option">
-            <input type="radio" name="gameStyle" value="rush">
-            <span class="style-symbol">↗</span>
-            <span>هجوم سريع</span>
-          </label>
-          <label class="style-option">
-            <input type="radio" name="gameStyle" value="precision">
-            <span class="style-symbol">⌖</span>
-            <span>دقة وتصويب</span>
-          </label>
-        </div>
-      </div>
-
-      <button type="button" id="generateBtn" class="generate-btn" disabled>
-        <span class="button-text">تحليل الجهاز وتوليد الحساسية</span>
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17 17 7M7 7h10v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
-      <p class="privacy-note"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z" stroke="currentColor" stroke-width="1.6"/><path d="m9 12 2 2 4-4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg> لا نحتاج إلى تسجيل حساب أو إدخال كلمة مرور.</p>
-    </section>
-
-    <section class="features">
-      <div class="feature-item">
-        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></span>
-        <div><h3>تحليل منظم</h3><p>خطوات واضحة قبل عرض النتيجة.</p></div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5m0 14h16M8 15v-4m4 4V7m4 8V9" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span>
-        <div><h3>إعدادات قابلة للتعديل</h3><p>انسخ الأرقام وجرّبها داخل اللعبة.</p></div>
-      </div>
-      <div class="feature-item">
-        <span class="feature-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M12 3 14.5 9.5 21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg></span>
-        <div><h3>تصميم خفيف</h3><p>واجهة مناسبة للهاتف والكمبيوتر.</p></div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <a href="#" class="footer-brand">KATSHR SENSITIVITY</a>
-      <p>أداة مستقلة غير تابعة رسميًا لشركة Garena.</p>
-      <p class="footer-copy">© 2026 Katshr. جميع الحقوق محفوظة.</p>
-    </footer>
-  </main>
-
-  <div id="analysisModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="analysisTitle">
-    <div class="modal-backdrop" data-close="analysis"></div>
-    <div class="modal-panel analysis-panel">
-      <div class="modal-top"><span class="modal-kicker">SMART ANALYSIS</span><button class="icon-button" type="button" data-close="analysis" aria-label="إغلاق">×</button></div>
-      <div class="scanner"><div class="scanner-ring ring-one"></div><div class="scanner-ring ring-two"></div><div class="scanner-core"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M12 1v4M12 19v4M1 12h4M19 12h4" stroke="currentColor" stroke-width="1.5"/></svg></div></div>
-      <h2 id="analysisTitle">جاري تجهيز التحليل</h2>
-      <p id="analysisSubtitle">يتم فحص المعلومات المتاحة...</p>
-      <div class="analysis-progress"><div id="progressBar"></div></div>
-      <div class="analysis-steps">
-        <div class="analysis-step" id="stepDevice"><span class="step-status">1</span><span>التعرّف على موديل الجهاز</span><span class="step-check">✓</span></div>
-        <div class="analysis-step" id="stepSpecs"><span class="step-status">2</span><span>مراجعة المواصفات المتاحة</span><span class="step-check">✓</span></div>
-        <div class="analysis-step" id="stepSettings"><span class="step-status">3</span><span>حساب الإعدادات المقترحة</span><span class="step-check">✓</span></div>
-      </div>
-      <p class="analysis-disclaimer">هذه الخطوات لا تعني أن بحثًا مباشرًا على الإنترنت قد تم. يلزم ربط مصدر بيانات فعلي لتأكيد المواصفات عبر الإنترنت.</p>
+  <!-- الرئيسية -->
+  <section class="page on" id="p-home">
+   <div class="hero"><div><h1>أهلاً <span id="hi">أحمد</span> 👋</h1><p>اشحن جواهر وعضويات فري فاير بنقاطك في ثوانٍ.</p></div>
+    <button class="btn ghost" onclick="topUp()"><i class="fa-solid fa-plus"></i> تغذية الرصيد</button></div>
+   <div class="grid two">
+    <div class="card">
+     <h3><i class="fa-solid fa-bolt"></i> شحن فري فاير</h3>
+     <div class="fg"><label>اختر الباقة</label><div class="pk" id="pk"><div class="pc sel"><i class="fa-solid fa-gem"></i><div class="t">110 جواهر</div><div class="p"><span class="coin">P</span>100</div></div><div class="pc"><i class="fa-solid fa-gem"></i><div class="t">231 جوهرة</div><div class="p"><span class="coin">P</span>200</div></div><div class="pc"><span class="tag">الأكثر طلباً</span><i class="fa-solid fa-gem"></i><div class="t">583 جوهرة</div><div class="p"><span class="coin">P</span>500</div></div><div class="pc"><i class="fa-solid fa-gem"></i><div class="t">1188 جوهرة</div><div class="p"><span class="coin">P</span>1000</div></div><div class="pc"><i class="fa-solid fa-calendar-week"></i><div class="t">عضوية أسبوعية</div><div class="p"><span class="coin">P</span>220</div></div><div class="pc"><i class="fa-solid fa-crown"></i><div class="t">عضوية شهرية</div><div class="p"><span class="coin">P</span>950</div></div></div></div>
+     <div class="fg"><label>Player ID</label><input type="text" inputmode="numeric" id="pid" placeholder="أدخل رقم الـ ID في اللعبة" maxlength="12"></div>
+     <div class="err" id="oErr"></div>
+     <div class="sum"><span>الباقة</span><b id="sName">110 جواهر</b></div>
+     <div class="sum"><span>التكلفة</span><b id="sCost">100 نقطة</b></div>
+     <div class="sum"><span>رصيدك بعد الشحن</span><b id="sAfter">2400 نقطة</b></div>
+     <button class="btn" style="margin-top:14px" onclick="order()"><i class="fa-solid fa-cart-shopping"></i> إتمام الشحن</button>
     </div>
-  </div>
-
-  <div id="resultModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="resultTitle">
-    <div class="modal-backdrop" data-close="result"></div>
-    <div class="modal-panel result-panel">
-      <div class="modal-top"><span class="modal-kicker">YOUR CONFIGURATION</span><button class="icon-button" type="button" data-close="result" aria-label="إغلاق">×</button></div>
-      <div class="result-heading">
-        <div class="result-success"><svg viewBox="0 0 24 24" fill="none"><path d="m5 12 4 4L19 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><h2 id="resultTitle">إعدادات الحساسية</h2><p id="resultDevice">هاتفك المحدد</p></div>
-      </div>
-      <div class="notice-box"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 11v5m0-8h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg><p id="resultNotice">الإعدادات التالية مقترحات أولية وليست نتائج مختبرة أو إعدادات رسمية.</p></div>
-      <div class="spec-summary" id="specSummary"></div>
-      <div class="settings-title"><h3>إعدادات الحساسية</h3><span>0–200</span></div>
-      <div id="sensitivityList" class="sensitivity-list"></div>
-      <div class="dpi-card"><div><span>DPI المقترح للتجربة</span><p>قد يختلف حسب الجهاز والتفضيل الشخصي.</p></div><strong id="dpiValue">400</strong></div>
-      <div class="result-actions"><button id="copyBtn" class="generate-btn" type="button"><svg viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="currentColor" stroke-width="1.7"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3" stroke="currentColor" stroke-width="1.7"/></svg><span>نسخ جميع الإعدادات</span></button><button id="newDeviceBtn" class="secondary-btn" type="button">تجربة هاتف آخر</button></div>
-      <div class="sources-section"><h3>حالة معلومات الجهاز</h3><div id="sourceStatus" class="source-status"></div></div>
-      <p class="result-footnote">اختبر الإعدادات في ساحة التدريب، وعدّلها تدريجيًا حسب استجابة هاتفك. لا توجد حساسية واحدة مضمونة لكل اللاعبين.</p>
+    <div class="card">
+     <h3><i class="fa-solid fa-clock-rotate-left"></i> آخر العمليات</h3>
+     <div id="recent"><div class="row"><div><b>110 جواهر</b><small>ID 123456789 · #PL-482915 · 10‏/11‏/2026</small></div><span class="st ok">ناجح</span></div><div class="row"><div><b>110 جواهر</b><small>ID 123456789 · #PL-482915 · 10‏/11‏/2026</small></div><span class="st ok">ناجح</span></div></div>
     </div>
-  </div>
+   </div>
+  </section>
 
-  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <!-- طلباتي -->
+  <section class="page" id="p-orders">
+   <h2>طلباتي</h2>
+   <div class="card"><div id="allOrders"><div class="row"><div><b>110 جواهر</b><small>ID 123456789 · #PL-482915 · 10‏/11‏/2026</small></div><span class="st ok">ناجح</span></div><div class="row"><div><b>110 جواهر</b><small>ID 123456789 · #PL-482915 · 10‏/11‏/2026</small></div><span class="st ok">ناجح</span></div><div class="row"><div><b>110 جواهر</b><small>ID 123456789 · #PL-482915 · 10‏/11‏/2026</small></div><span class="st ok">ناجح</span></div><div class="row"><div><b>110 جواهر</b><small>ID 123456789 · #PL-482915 · 10‏/11‏/2026</small></div><span class="st ok">ناجح</span></div></div></div>
+  </section>
+
+  <!-- حسابي -->
+  <section class="page" id="p-profile">
+   <h2>حسابي</h2>
+   <div class="hero" style="margin-bottom:16px"><div><p style="margin:0 0 4px">معرّف حسابك (Paylit ID)</p><h1 id="pUid" style="letter-spacing:3px;direction:ltr;text-align:right">48291037</h1><p>أرسله لنا عند تغذية الرصيد ليتم التعرف على حسابك.</p></div>
+    <button class="btn ghost" onclick="copyUid()"><i class="fa-regular fa-copy"></i> نسخ المعرّف</button></div>
+   <div class="grid three">
+    <div class="card stat"><b id="stBal">2500</b><span>الرصيد الحالي</span></div>
+    <div class="card stat"><b id="stCnt">4</b><span>عدد الطلبات الناجحة</span></div>
+    <div class="card stat"><b id="stSpent">400</b><span>إجمالي النقاط المصروفة</span></div>
+   </div>
+   <div class="grid two">
+    <div class="card"><h3><i class="fa-solid fa-user"></i> بيانات الحساب</h3>
+     <div class="fg"><label>اسم المستخدم</label><input id="pName"></div>
+     <div class="fg"><label>البريد الإلكتروني</label><input id="pMail" disabled></div>
+     <div class="fg"><label>Player ID المحفوظ</label><input id="pPid" inputmode="numeric" placeholder="اختياري"></div>
+     <button class="btn" onclick="saveProfile()"><i class="fa-solid fa-floppy-disk"></i> حفظ التغييرات</button>
+    </div>
+    <div class="card"><h3><i class="fa-solid fa-lock"></i> تغيير كلمة المرور</h3>
+     <div class="fg"><label>كلمة المرور الحالية</label><input id="cOld" type="password"></div>
+     <div class="fg"><label>كلمة المرور الجديدة</label><input id="cNew" type="password" placeholder="6 أحرف على الأقل"></div>
+     <div class="err" id="cErr"></div>
+     <button class="btn ghost" onclick="changePass()">تحديث كلمة المرور</button>
+     <button class="btn danger" style="margin-top:12px" onclick="logout()"><i class="fa-solid fa-arrow-right-from-bracket"></i> تسجيل الخروج</button>
+    </div>
+   </div>
+  </section>
+
+  <!-- الدعم -->
+  <section class="page" id="p-help">
+   <h2>الدعم والأسئلة الشائعة</h2>
+   <div class="grid two">
+    <div>
+     <details><summary>كم يستغرق وصول الشحن؟</summary><p>عادة خلال دقائق بعد تأكيد الطلب. إذا تأخر أكثر من 30 دقيقة تواصل معنا مع رقم المعاملة.</p></details>
+     <details><summary>أين أجد Player ID؟</summary><p>افتح فري فاير، اضغط على صورة حسابك في الزاوية، وستجد الرقم أسفل اسمك.</p></details>
+     <details><summary>أدخلت ID خاطئاً، ماذا أفعل؟</summary><p>الشحن يُرسل مباشرة للـ ID المُدخل، لذلك راجعه جيداً قبل التأكيد. لا يمكن استرجاع طلب نُفّذ على ID خاطئ.</p></details>
+     <details><summary>كيف أحصل على نقاط؟</summary><p>من زر "تغذية الرصيد" في الصفحة الرئيسية.</p></details>
+     <details><summary>هل الباقات رسمية؟</summary><p>نعم، يتم الشحن عبر موردين معتمدين لحساب اللاعب مباشرة دون الحاجة لكلمة مرور حسابك.</p></details>
+    </div>
+    <div class="card"><h3><i class="fa-solid fa-headset"></i> تواصل معنا</h3>
+     <div class="fg"><label>موضوع الرسالة</label><input id="sSub" placeholder="مثال: تأخر طلب"></div>
+     <div class="fg"><label>الرسالة</label><textarea id="sMsg" placeholder="اكتب مشكلتك مع رقم المعاملة إن وجد"></textarea></div>
+     <button class="btn" onclick="sendSupport()"><i class="fa-brands fa-whatsapp"></i> إرسال عبر واتساب</button>
+    </div>
+   </div>
+  </section>
+
+  <!-- الشروط -->
+  <section class="page" id="p-terms">
+   <h2>الشروط والخصوصية</h2>
+   <div class="card terms">
+    <h4>استخدام المنصة</h4><p>المنصة مخصصة لشحن حسابات فري فاير بالنقاط. أنت مسؤول عن صحة الـ Player ID المُدخل.</p>
+    <h4>الاسترجاع</h4><p>الطلبات المنفذة بنجاح غير قابلة للاسترجاع. الطلبات الفاشلة يعاد رصيدها تلقائياً.</p>
+    <h4>الخصوصية</h4><p>لا نطلب كلمة مرور حساب اللعبة أبداً، ولا نشارك بياناتك مع أي طرف خارجي.</p>
+    <h4>إخلاء مسؤولية</h4><p>Paylit منصة مستقلة وغير تابعة لشركة Garena أو Free Fire.</p>
+   </div>
+  </section>
+ </div>
+
+ <div class="bottom" id="navBot"><a data-p="home" class="on"><i class="fa-solid fa-house"></i>الرئيسية</a><a data-p="orders"><i class="fa-solid fa-receipt"></i>طلباتي</a><a data-p="profile"><i class="fa-solid fa-user"></i>حسابي</a><a data-p="help"><i class="fa-solid fa-headset"></i>الدعم</a><a data-p="terms"><i class="fa-solid fa-shield-halved"></i>الشروط</a></div>
+</div>
+
+<div id="toast"></div>
+<div class="ov" id="tov" onclick="if(event.target===this)closeT()"><div class="md">
+ <div class="mi s" style="color:#25d366"><i class="fa-brands fa-whatsapp"></i></div>
+ <div class="mt">تغذية الرصيد</div>
+ <div style="font-size:13px;color:var(--mut);margin-bottom:14px;line-height:1.9">تواصل معنا على واتساب وأرسل اسم حسابك ومبلغ التغذية، وسنضيف النقاط لرصيدك بعد التأكيد.</div>
+ <div style="font-size:12px;color:var(--mut);margin-bottom:12px">معرّفك: <b id="tUid" style="color:var(--cy);font-size:16px;letter-spacing:2px">48291037</b></div>
+ <div class="rc" style="display:block;text-align:center"><div style="justify-content:center;font-size:18px;font-weight:800;direction:ltr;letter-spacing:1px"><span style="color:#fff">+249 124 673 541</span></div></div>
+ <a class="btn" id="waLink" target="_blank" rel="noopener" style="text-decoration:none;background:#25d366;color:#04210f;box-shadow:0 4px 20px rgba(37,211,102,.3)"><i class="fa-brands fa-whatsapp"></i> فتح واتساب</a>
+ <button class="btn ghost" style="margin-top:10px" onclick="copyWa()"><i class="fa-regular fa-copy"></i> نسخ الرقم</button>
+ <button class="btn ghost" style="margin-top:10px;background:none" onclick="closeT()">إغلاق</button>
+</div></div>
+<div class="ov" id="ov"><div class="md">
+ <div class="mi l" id="mi"><i class="fa-solid fa-spinner fa-spin"></i></div>
+ <div class="mt" id="mt"></div>
+ <div class="rc" id="rc"><div><span>رقم اللاعب</span><span id="rP"></span></div><div><span>الباقة</span><span id="rN"></span></div><div><span>التكلفة</span><span id="rC"></span></div><div><span>رقم المعاملة</span><span id="rO"></span></div></div>
+ <div id="mm" style="font-size:13px;color:var(--mut);margin-bottom:16px"></div>
+ <button class="btn ghost" id="mb" onclick="closeM()">إغلاق</button>
+</div></div>
+
+<!-- منطق الموقع (الضغط والتأثيرات) -->
+<script>
+/* عرض أي خطأ جافاسكربت أعلى الشاشة (للتشخيص على الجوال). احذف هذا الجزء عند الإطلاق */
+window.addEventListener('error',function(e){
+ var b=document.getElementById('errBanner');
+ if(!b){b=document.createElement('div');b.id='errBanner';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:#7f1d1d;color:#fff;font:12px monospace;padding:8px;direction:ltr;white-space:pre-wrap';document.body.appendChild(b)}
+ b.textContent+=e.message+' (line '+e.lineno+')\n';
+});
+
+/* ========== config.js ==========
+   الإعدادات: رقم الواتساب، الباقات والأسعار، صفحات القائمة. أغلب التعديلات البسيطة هنا.
+*/
+
+/* رقم واتساب التغذية (بدون + أو مسافات) */
+const WA_NUMBER = '249124673541';
+
+/* رصيد ابتدائي للحساب الجديد (للتجربة فقط). اجعله 0 عند الإطلاق الحقيقي */
+const START_BALANCE = 2500;
+
+
+const PACKS=[
+ {n:'110 جواهر',c:100,i:'fa-gem'},{n:'231 جوهرة',c:200,i:'fa-gem'},{n:'583 جوهرة',c:500,i:'fa-gem',tag:'الأكثر طلباً'},
+ {n:'1188 جوهرة',c:1000,i:'fa-gem'},{n:'عضوية أسبوعية',c:220,i:'fa-calendar-week'},{n:'عضوية شهرية',c:950,i:'fa-crown'}
+];
+
+const PAGES=[['home','الرئيسية','fa-house'],['orders','طلباتي','fa-receipt'],['profile','حسابي','fa-user'],['help','الدعم','fa-headset'],['terms','الشروط','fa-shield-halved']];
+
+/* ========== utils.js ==========
+   أدوات مساعدة وحالة الموقع (المستخدمون، المستخدم الحالي، الباقة المختارة) وحفظ البيانات.
+*/
+
+const $=id=>document.getElementById(id);
+
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+
+const set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+
+let users=get('pl_users',{}), me=get('pl_me',null), sel=PACKS[0], mode='l', busy=false;
+
+
+// المستخدم الحالي + حفظ البيانات
+const U=()=>users[me], save=()=>set('pl_users',users);
+
+
+// رسالة صغيرة تظهر أعلى الشاشة
+function toast(t){const x=$('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2200)}
+
+/* ========== auth.js ==========
+   تسجيل الدخول وإنشاء الحساب والخروج، وتوليد المعرّف.
+*/
+
+// التبديل بين تبويب الدخول وتبويب حساب جديد
+function authTab(m){mode=m;$('tabL').classList.toggle('on',m=='l');$('tabR').classList.toggle('on',m=='r');
+ $('fgName').style.display=$('fgPass2').style.display=m=='r'?'block':'none';
+ $('aBtn').innerHTML=m=='l'?'<i class="fa-solid fa-right-to-bracket"></i> دخول':'<i class="fa-solid fa-user-plus"></i> إنشاء الحساب';$('aErr').textContent=''}
+
+// تشفير كلمة المرور (SHA-256) قبل حفظها
+async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
+
+// زر الدخول/إنشاء الحساب: يفحص البيانات ثم يدخل
+async function submitAuth(){
+ const mail=$('aMail').value.trim().toLowerCase(),pass=$('aPass').value,e=$('aErr');e.textContent='';
+ if(!/^\S+@\S+\.\S+$/.test(mail))return e.textContent='أدخل بريداً إلكترونياً صحيحاً.';
+ if(pass.length<6)return e.textContent='كلمة المرور يجب أن تكون 6 أحرف على الأقل.';
+ const h=await hash(pass);
+ if(mode=='r'){
+  const name=$('aName').value.trim();
+  if(name.length<3)return e.textContent='اسم المستخدم 3 أحرف على الأقل.';
+  if(pass!==$('aPass2').value)return e.textContent='كلمتا المرور غير متطابقتين.';
+  if(users[mail])return e.textContent='هذا البريد مسجل مسبقاً، سجّل الدخول.';
+  users[mail]={name,h,bal:START_BALANCE,pid:'',orders:[],uid:genUid()};
+ }else{
+  if(!users[mail]||users[mail].h!==h)return e.textContent='البريد أو كلمة المرور غير صحيحة.';
+ }
+ set('pl_users',users);me=mail;set('pl_me',me);enter();
+}
+
+// تسجيل الخروج والرجوع لصفحة الدخول
+function logout(){me=null;set('pl_me',null);$('app').style.display='none';$('auth').style.display='grid';$('aPass').value=''}
+
+// توليد معرّف فريد من 8 أرقام لكل مستخدم (Paylit ID)
+function genUid(){
+ const used=new Set(Object.values(users).map(x=>x.uid));let id;
+ do{id=String(Math.floor(10000000+Math.random()*90000000))}while(used.has(id));
+ return id;
+}
+
+// نسخ معرّف المستخدم
+function copyUid(){
+ const t=U().uid;
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('تم نسخ المعرّف')).catch(()=>toast(t));
+}
+
+/* ========== nav.js ==========
+   التنقل بين الصفحات وإظهار الموقع بعد الدخول.
+*/
+
+// بناء قائمة التنقل (من القائمة PAGES في config.js)
+function buildNav(){
+ $('navTop').innerHTML=PAGES.map(p=>`<a data-p="${p[0]}">${p[1]}</a>`).join('');
+ $('navBot').innerHTML=PAGES.map(p=>`<a data-p="${p[0]}"><i class="fa-solid ${p[2]}"></i>${p[1]}</a>`).join('');
+}
+
+// الانتقال لصفحة (home/orders/profile/help/terms)
+function go(p){
+ document.querySelectorAll('.page').forEach(x=>x.classList.toggle('on',x.id=='p-'+p));
+ document.querySelectorAll('nav a,.bottom a').forEach(a=>a.classList.toggle('on',a.dataset.p==p));
+ try{ if(me&&users[me]){ if(p=='orders')renderOrders(); if(p=='profile')renderProfile(); } }catch(e){ console.error(e) }
+ window.scrollTo(0,0);
+}
+
+// أي ضغطة على رابط فيه data-p داخل القائمة تنقلك للصفحة (تعمل حتى لو لم تُبنَ القائمة بالجافاسكربت)
+document.addEventListener('click',function(e){
+ var a=e.target.closest&&e.target.closest('nav a[data-p], .bottom a[data-p]');
+ if(a){ e.preventDefault(); go(a.dataset.p); }
+});
+
+// عرض الموقع بعد الدخول وتحميل بيانات المستخدم
+function enter(){
+ if(!U().uid){U().uid=genUid();save()}
+ $('auth').style.display='none';$('app').style.display='block';
+ $('hi').textContent=U().name;$('pid').value='';renderPacks();refresh();go('home');
+}
+
+
+/* ========== store.js ==========
+   صفحة الرئيسية: الباقات، تنفيذ الشحن، نافذة الحالة.
+*/
+
+// رسم بطاقات الباقات (من PACKS في config.js)
+function renderPacks(){
+ $('pk').innerHTML=PACKS.map((p,i)=>`<div class="pc ${p===sel?'sel':''}" onclick="pick(${i})">${p.tag?`<span class="tag">${p.tag}</span>`:''}<i class="fa-solid ${p.i}"></i><div class="t">${p.n}</div><div class="p"><span class="coin">P</span>${p.c}</div></div>`).join('');
+}
+
+// اختيار باقة
+function pick(i){sel=PACKS[i];renderPacks();refresh()}
+
+// تحديث الرصيد وملخص الطلب وآخر العمليات
+function refresh(){
+ const u=U();$('bal').textContent=u.bal.toLocaleString('en');
+ $('sName').textContent=sel.n;$('sCost').textContent=sel.c+' نقطة';
+ const after=u.bal-sel.c;$('sAfter').textContent=after<0?'رصيد غير كافٍ':after+' نقطة';
+ $('sAfter').style.color=after<0?'var(--rd)':'#fff';
+ if(!$('pid').value&&u.pid)$('pid').value=u.pid;
+ $('recent').innerHTML=list(u.orders.slice(0,4));
+}
+
+// رسم قائمة الطلبات (تستخدم في الرئيسية وصفحة طلباتي)
+function list(a){
+ if(!a.length)return '<div class="empty"><i class="fa-regular fa-folder-open"></i>لا توجد طلبات بعد. اختر باقة وابدأ أول شحن.</div>';
+ return a.map(o=>`<div class="row"><div><b>${o.n}</b><small>ID ${o.pid} · ${o.id} · ${o.d}</small></div><span class="st ${o.ok?'ok':'no'}">${o.ok?'ناجح':'فاشل'}</span></div>`).join('');
+}
+
+// عرض نافذة الحالة (جاري/نجاح/فشل) وفاتورة الطلب
+function showM(t,title,msg,rc){
+ $('mi').className='mi '+t;$('mi').innerHTML={l:'<i class="fa-solid fa-spinner fa-spin"></i>',s:'<i class="fa-solid fa-circle-check"></i>',e:'<i class="fa-solid fa-circle-xmark"></i>'}[t];
+ $('mt').textContent=title;$('mm').textContent=msg;$('mb').style.display=t=='l'?'none':'block';
+ $('rc').style.display=rc?'block':'none';if(rc){$('rP').textContent=rc.pid;$('rN').textContent=rc.n;$('rC').textContent=rc.c+' نقطة';$('rO').textContent=rc.id}
+ $('ov').style.display='flex';
+}
+
+// إغلاق نافذة الحالة
+function closeM(){$('ov').style.display='none'}
+
+// تنفيذ الشحن: فحص الـ ID والرصيد ثم الخصم وتسجيل الطلب. اربط API المورد هنا
+function order(){
+ if(busy)return;const u=U(),pid=$('pid').value.trim(),e=$('oErr');e.textContent='';
+ if(!/^\d{6,12}$/.test(pid))return e.textContent='Player ID يجب أن يكون أرقاماً فقط (6 إلى 12 رقم).';
+ if(u.bal<sel.c)return showM('e','رصيدك غير كافٍ',`تحتاج ${sel.c} نقطة وعندك ${u.bal}. غذِّ رصيدك ثم أعد المحاولة.`);
+ busy=true;showM('l','جاري تنفيذ الطلب','لا تغلق الصفحة حتى يكتمل الشحن.');
+ setTimeout(()=>{
+  /* هنا اربط الـ API الحقيقي للمورد، وعدّل ok حسب ردّه */
+  const ok=true,id='#PL-'+Math.floor(100000+Math.random()*900000);
+  const o={id,pid,n:sel.n,c:sel.c,ok,d:new Date().toLocaleDateString('ar-EG')};
+  if(ok)u.bal-=sel.c;u.orders.unshift(o);u.pid=pid;save();busy=false;refresh();
+  ok?showM('s','تم الشحن بنجاح','تم إرسال الباقة إلى حساب اللاعب.',o):showM('e','فشل الطلب','لم يتم خصم أي نقاط. حاول مجدداً.');
+ },1600);
+}
+
+
+/* ========== pages.js ==========
+   باقي الصفحات: طلباتي، حسابي، الدعم، تغذية الرصيد.
+*/
+
+// عرض كل الطلبات بصفحة طلباتي
+function renderOrders(){$('allOrders').innerHTML=list(U().orders)}
+
+// تعبئة صفحة حسابي (إحصائيات + بيانات)
+function renderProfile(){
+ const u=U(),ok=u.orders.filter(o=>o.ok);
+ $('pUid').textContent=u.uid;$('stBal').textContent=u.bal;$('stCnt').textContent=ok.length;$('stSpent').textContent=ok.reduce((s,o)=>s+o.c,0);
+ $('pName').value=u.name;$('pMail').value=me;$('pPid').value=u.pid||'';
+}
+
+// حفظ الاسم والـ Player ID
+function saveProfile(){
+ const n=$('pName').value.trim(),p=$('pPid').value.trim();
+ if(n.length<3)return toast('اسم المستخدم 3 أحرف على الأقل');
+ if(p&&!/^\d{6,12}$/.test(p))return toast('Player ID غير صحيح');
+ const u=U();u.name=n;u.pid=p;save();$('hi').textContent=n;toast('تم حفظ التغييرات');
+}
+
+// تغيير كلمة المرور
+async function changePass(){
+ const u=U(),e=$('cErr');e.textContent='';
+ if(await hash($('cOld').value)!==u.h)return e.textContent='كلمة المرور الحالية غير صحيحة.';
+ if($('cNew').value.length<6)return e.textContent='الجديدة يجب أن تكون 6 أحرف على الأقل.';
+ u.h=await hash($('cNew').value);save();$('cOld').value=$('cNew').value='';toast('تم تحديث كلمة المرور');
+}
+
+// إرسال رسالة الدعم عبر واتساب
+function sendSupport(){
+ if($('sSub').value.trim().length<3||$('sMsg').value.trim().length<10)return toast('اكتب الموضوع ورسالة واضحة');
+ const u=U(),t=`الدعم - ${$('sSub').value.trim()}\nالمعرّف: ${u.uid}\nالاسم: ${u.name}\n\n${$('sMsg').value.trim()}`;
+ window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`,'_blank');
+ $('sSub').value=$('sMsg').value='';
+}
+
+// فتح نافذة تغذية الرصيد (واتساب)
+function topUp(){
+ const u=U(),msg=`مرحباً، أريد تغذية رصيدي في Paylit.\nالمعرّف (ID): ${u.uid}\nالاسم: ${u.name}`;
+ $('tUid').textContent=u.uid;
+ $('waLink').href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+ $('tov').style.display='flex';
+}
+
+// إغلاق نافذة التغذية
+function closeT(){$('tov').style.display='none'}
+
+// نسخ رقم الواتساب
+function copyWa(){
+ const t='+'+WA_NUMBER;
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('تم نسخ الرقم')).catch(()=>toast(t));
+}
+
+
+/* ========== main.js ==========
+   نقطة البداية: تشغيل الموقع. يجب أن يبقى آخر ملف يُحمّل.
+*/
+
+function init(){
+ $('auth').addEventListener('keydown',function(e){if(e.key==='Enter')submitAuth()});
+ buildNav();
+ if(me&&users[me])enter();
+}
+// يشتغل بعد تحميل الصفحة حتى لو وضعت السكربت في <head>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+
+</script>
 </body>
 </html>

@@ -1,713 +1,245 @@
+/* عرض أي خطأ جافاسكربت أعلى الشاشة (للتشخيص على الجوال). احذف هذا الجزء عند الإطلاق */
+window.addEventListener('error',function(e){
+ var b=document.getElementById('errBanner');
+ if(!b){b=document.createElement('div');b.id='errBanner';b.style.cssText='position:fixed;top:0;left:0;right:0;z-index:9999;background:#7f1d1d;color:#fff;font:12px monospace;padding:8px;direction:ltr;white-space:pre-wrap';document.body.appendChild(b)}
+ b.textContent+=e.message+' (line '+e.lineno+')\n';
+});
 
-"use strict";
-
-/*
-  KATSHR SENSITIVITY
-  This version uses a local device catalogue and transparent
-  estimated settings. It does NOT perform live web searches.
-  A verified online data service must be connected separately.
+/* ========== config.js ==========
+   الإعدادات: رقم الواتساب، الباقات والأسعار، صفحات القائمة. أغلب التعديلات البسيطة هنا.
 */
 
-const DEVICE_CATALOG = {
-  "Samsung": [
-    ["Galaxy A10s", "2019", "MediaTek Helio P22", "2–3 GB", "60 Hz", "720 × 1520"],
-    ["Galaxy A12", "2020", "MediaTek Helio P35", "3–6 GB", "60 Hz", "720 × 1600"],
-    ["Galaxy A13", "2022", "Exynos 850 / Helio G80", "3–6 GB", "60 Hz", "1080 × 2408"],
-    ["Galaxy A14", "2023", "Exynos 850 / Dimensity 700", "4–8 GB", "60 Hz", "1080 × 2408"],
-    ["Galaxy A15", "2023", "Helio G99 / Dimensity 6100+", "4–8 GB", "90 Hz", "1080 × 2340"],
-    ["Galaxy A16", "2024", "Exynos 1330 / Helio G99", "4–8 GB", "90 Hz", "1080 × 2340"],
-    ["Galaxy A25", "2023", "Exynos 1280", "6–8 GB", "120 Hz", "1080 × 2340"],
-    ["Galaxy A35", "2024", "Exynos 1380", "6–8 GB", "120 Hz", "1080 × 2340"],
-    ["Galaxy A55", "2024", "Exynos 1480", "8–12 GB", "120 Hz", "1080 × 2340"],
-    ["Galaxy S21", "2021", "Exynos 2100 / Snapdragon 888", "8 GB", "120 Hz", "1080 × 2400"],
-    ["Galaxy S22", "2022", "Exynos 2200 / Snapdragon 8 Gen 1", "8 GB", "120 Hz", "1080 × 2340"],
-    ["Galaxy S23", "2023", "Snapdragon 8 Gen 2", "8–12 GB", "120 Hz", "1080 × 2340"],
-    ["Galaxy S24", "2024", "Exynos 2400 / Snapdragon 8 Gen 3", "8–12 GB", "120 Hz", "1080 × 2340"],
-    ["Galaxy S25", "2025", "Snapdragon 8 Elite", "12 GB", "120 Hz", "1080 × 2340"],
-    ["Galaxy M14", "2023", "Exynos 1330", "4–6 GB", "90 Hz", "1080 × 2408"],
-    ["Galaxy M15", "2024", "Dimensity 6100+", "4–6 GB", "90 Hz", "1080 × 2340"]
-  ],
-  "Apple": [
-    ["iPhone 11", "2019", "Apple A13 Bionic", "4 GB", "60 Hz", "828 × 1792"],
-    ["iPhone 12", "2020", "Apple A14 Bionic", "4–6 GB", "60 Hz", "1170 × 2532"],
-    ["iPhone 13", "2021", "Apple A15 Bionic", "4–6 GB", "60 Hz", "1170 × 2532"],
-    ["iPhone 14", "2022", "Apple A15 Bionic", "6 GB", "60 Hz", "1170 × 2532"],
-    ["iPhone 15", "2023", "Apple A16 Bionic", "6 GB", "60 Hz", "1179 × 2556"],
-    ["iPhone 16", "2024", "Apple A18", "8 GB", "60 Hz", "1179 × 2556"],
-    ["iPhone 16 Pro", "2024", "Apple A18 Pro", "8 GB", "120 Hz", "1206 × 2622"],
-    ["iPhone 17", "2025", "Apple A19", "غير مؤكد هنا", "حسب الموديل", "حسب الموديل"],
-    ["iPhone 17 Pro", "2025", "Apple A19 Pro", "غير مؤكد هنا", "حسب الموديل", "حسب الموديل"]
-  ],
-  "Xiaomi": [
-    ["Redmi 12", "2023", "MediaTek Helio G88", "4–8 GB", "90 Hz", "1080 × 2460"],
-    ["Redmi 13", "2024", "MediaTek Helio G91 Ultra", "6–8 GB", "90 Hz", "1080 × 2460"],
-    ["Redmi Note 12", "2023", "Snapdragon 685", "4–8 GB", "120 Hz", "1080 × 2400"],
-    ["Redmi Note 13", "2024", "Snapdragon 685 / Dimensity 6080", "6–12 GB", "120 Hz", "1080 × 2400"],
-    ["Redmi Note 14", "2025", "يختلف حسب النسخة", "حسب النسخة", "حسب النسخة", "حسب النسخة"],
-    ["Xiaomi 13", "2023", "Snapdragon 8 Gen 2", "8–12 GB", "120 Hz", "1080 × 2400"],
-    ["Xiaomi 14", "2024", "Snapdragon 8 Gen 3", "12–16 GB", "120 Hz", "1200 × 2670"],
-    ["Xiaomi 15", "2025", "Snapdragon 8 Elite", "12–16 GB", "120 Hz", "1200 × 2670"]
-  ],
-  "POCO": [
-    ["POCO M5", "2022", "MediaTek Helio G99", "4–6 GB", "90 Hz", "1080 × 2400"],
-    ["POCO X5 Pro", "2023", "Snapdragon 778G", "6–8 GB", "120 Hz", "1080 × 2400"],
-    ["POCO X6", "2024", "Snapdragon 7s Gen 2", "8–12 GB", "120 Hz", "1220 × 2712"],
-    ["POCO X6 Pro", "2024", "Dimensity 8300 Ultra", "8–12 GB", "120 Hz", "1220 × 2712"],
-    ["POCO F6", "2024", "Snapdragon 8s Gen 3", "8–12 GB", "120 Hz", "1200 × 2712"],
-    ["POCO F7", "2025", "يختلف حسب النسخة", "حسب النسخة", "حسب النسخة", "حسب النسخة"]
-  ],
-  "Redmi": [
-    ["Redmi 9A", "2020", "MediaTek Helio G25", "2–6 GB", "60 Hz", "720 × 1600"],
-    ["Redmi 10", "2021", "MediaTek Helio G88", "4–6 GB", "90 Hz", "1080 × 2400"],
-    ["Redmi 12C", "2023", "MediaTek Helio G85", "3–6 GB", "60 Hz", "720 × 1650"],
-    ["Redmi 13C", "2023", "MediaTek Helio G85", "4–8 GB", "90 Hz", "720 × 1600"],
-    ["Redmi A3", "2024", "MediaTek Helio G36", "3–6 GB", "90 Hz", "720 × 1650"]
-  ],
-  "Huawei": [
-    ["P30 Lite", "2019", "Kirin 710", "4–8 GB", "60 Hz", "1080 × 2312"],
-    ["P30 Pro", "2019", "Kirin 980", "6–8 GB", "60 Hz", "1080 × 2340"],
-    ["Nova 9", "2021", "Snapdragon 778G", "8 GB", "120 Hz", "1080 × 2340"],
-    ["Nova 11", "2023", "Snapdragon 778G", "8 GB", "120 Hz", "1080 × 2412"],
-    ["Nova 12", "2024", "يختلف حسب النسخة", "حسب النسخة", "حسب النسخة", "حسب النسخة"]
-  ],
-  "HONOR": [
-    ["X7b", "2023", "Snapdragon 680", "6–8 GB", "90 Hz", "1080 × 2412"],
-    ["X8b", "2023", "Snapdragon 680", "8 GB", "90 Hz", "1080 × 2412"],
-    ["X9b", "2023", "Snapdragon 6 Gen 1", "8–12 GB", "120 Hz", "1200 × 2652"],
-    ["200", "2024", "Snapdragon 7 Gen 3", "8–12 GB", "120 Hz", "1200 × 2664"],
-    ["Magic7 Pro", "2025", "Snapdragon 8 Elite", "12–16 GB", "120 Hz", "1280 × 2800"]
-  ],
-  "OPPO": [
-    ["A58", "2023", "Helio G85 / Dimensity 700", "6–8 GB", "حسب النسخة", "1080 × 2400"],
-    ["A78", "2023", "Snapdragon 680 / Dimensity 700", "8 GB", "90 Hz", "1080 × 2400"],
-    ["Reno 10", "2023", "Dimensity 7050", "8 GB", "120 Hz", "1080 × 2412"],
-    ["Reno 11", "2024", "Dimensity 7050", "8–12 GB", "120 Hz", "1080 × 2412"],
-    ["Reno 12", "2024", "Dimensity 7300", "12 GB", "120 Hz", "1080 × 2412"]
-  ],
-  "Vivo": [
-    ["Y21", "2021", "MediaTek Helio P35", "4 GB", "60 Hz", "720 × 1600"],
-    ["Y22", "2022", "MediaTek Helio G85", "4–6 GB", "90 Hz", "720 × 1612"],
-    ["Y27", "2023", "Helio G85 / Dimensity 6020", "6–8 GB", "حسب النسخة", "1080 × 2388"],
-    ["V29", "2023", "Snapdragon 778G", "8–12 GB", "120 Hz", "1260 × 2800"],
-    ["V30", "2024", "Snapdragon 7 Gen 3", "8–12 GB", "120 Hz", "1260 × 2800"]
-  ],
-  "Realme": [
-    ["C55", "2023", "MediaTek Helio G88", "4–8 GB", "90 Hz", "1080 × 2400"],
-    ["C67", "2023", "Snapdragon 685", "6–8 GB", "90 Hz", "1080 × 2400"],
-    ["12 Pro", "2024", "Snapdragon 6 Gen 1", "8–12 GB", "120 Hz", "1080 × 2412"],
-    ["13 Pro+", "2024", "Snapdragon 7s Gen 2", "8–12 GB", "120 Hz", "1264 × 2780"]
-  ],
-  "Infinix": [
-    ["Hot 30", "2023", "MediaTek Helio G88", "4–8 GB", "90 Hz", "1080 × 2460"],
-    ["Hot 40 Pro", "2023", "MediaTek Helio G99", "8 GB", "120 Hz", "1080 × 2460"],
-    ["Hot 50 Pro+", "2024", "MediaTek Helio G100", "8 GB", "120 Hz", "1080 × 2436"],
-    ["Note 30", "2023", "MediaTek Helio G99", "8 GB", "120 Hz", "1080 × 2460"],
-    ["Note 40", "2024", "Helio G99 Ultimate", "8 GB", "120 Hz", "1080 × 2436"],
-    ["GT 20 Pro", "2024", "Dimensity 8200 Ultimate", "8–12 GB", "144 Hz", "1080 × 2436"]
-  ],
-  "TECNO": [
-    ["Spark 10", "2023", "MediaTek Helio G37", "4–8 GB", "90 Hz", "720 × 1612"],
-    ["Spark 20", "2023", "MediaTek Helio G85", "4–8 GB", "90 Hz", "720 × 1612"],
-    ["Spark 20 Pro", "2023", "MediaTek Helio G99", "8 GB", "120 Hz", "1080 × 2460"],
-    ["Camon 20", "2023", "MediaTek Helio G85", "8 GB", "60 Hz", "1080 × 2400"],
-    ["Camon 30", "2024", "Helio G99 Ultimate", "8–12 GB", "120 Hz", "1080 × 2436"],
-    ["Pova 6 Pro", "2024", "Dimensity 6080", "8–12 GB", "120 Hz", "1080 × 2436"]
-  ],
-  "OnePlus": [
-    ["Nord CE 3 Lite", "2023", "Snapdragon 695", "8 GB", "120 Hz", "1080 × 2400"],
-    ["Nord 3", "2023", "Dimensity 9000", "8–16 GB", "120 Hz", "1240 × 2772"],
-    ["Nord 4", "2024", "Snapdragon 7+ Gen 3", "8–16 GB", "120 Hz", "1240 × 2772"],
-    ["OnePlus 12", "2024", "Snapdragon 8 Gen 3", "12–24 GB", "120 Hz", "1440 × 3168"],
-    ["OnePlus 13", "2025", "Snapdragon 8 Elite", "12–24 GB", "120 Hz", "1440 × 3168"]
-  ],
-  "ZTE": [
-    ["Blade A31", "2021", "Unisoc SC9863A", "2 GB", "60 Hz", "720 × 1600"],
-    ["Blade A51", "2021", "Unisoc SC9863A", "2–3 GB", "60 Hz", "720 × 1600"],
-    ["Blade V40", "2022", "يختلف حسب النسخة", "حسب النسخة", "حسب النسخة", "حسب النسخة"],
-    ["Nubia Neo", "2023", "Unisoc T820", "8 GB", "120 Hz", "1080 × 2408"],
-    ["RedMagic 9 Pro", "2023", "Snapdragon 8 Gen 3", "12–16 GB", "120 Hz", "1116 × 2480"],
-    ["RedMagic 10 Pro", "2024", "Snapdragon 8 Elite", "12–24 GB", "144 Hz", "1216 × 2688"]
-  ],
-  "Motorola": [
-    ["Moto G54", "2023", "Dimensity 7020", "8–12 GB", "120 Hz", "1080 × 2400"],
-    ["Moto G84", "2023", "Snapdragon 695", "8–12 GB", "120 Hz", "1080 × 2400"],
-    ["Edge 40", "2023", "Dimensity 8020", "8 GB", "144 Hz", "1080 × 2400"],
-    ["Edge 50 Pro", "2024", "Snapdragon 7 Gen 3", "8–12 GB", "144 Hz", "1220 × 2712"]
-  ],
-  "Google": [
-    ["Pixel 6", "2021", "Google Tensor", "8 GB", "90 Hz", "1080 × 2400"],
-    ["Pixel 7", "2022", "Google Tensor G2", "8 GB", "90 Hz", "1080 × 2400"],
-    ["Pixel 8", "2023", "Google Tensor G3", "8 GB", "120 Hz", "1080 × 2400"],
-    ["Pixel 9", "2024", "Google Tensor G4", "12 GB", "120 Hz", "1080 × 2424"]
-  ],
-  "ASUS": [
-    ["ROG Phone 7", "2023", "Snapdragon 8 Gen 2", "12–16 GB", "165 Hz", "1080 × 2448"],
-    ["ROG Phone 8", "2024", "Snapdragon 8 Gen 3", "12–24 GB", "165 Hz", "1080 × 2400"],
-    ["ROG Phone 9", "2024", "Snapdragon 8 Elite", "12–24 GB", "185 Hz", "1080 × 2400"]
-  ],
-  "Sony": [
-    ["Xperia 1 V", "2023", "Snapdragon 8 Gen 2", "12 GB", "120 Hz", "1644 × 3840"],
-    ["Xperia 1 VI", "2024", "Snapdragon 8 Gen 3", "12–16 GB", "120 Hz", "1080 × 2340"]
-  ],
-  "Nothing": [
-    ["Phone (1)", "2022", "Snapdragon 778G+", "8–12 GB", "120 Hz", "1080 × 2400"],
-    ["Phone (2)", "2023", "Snapdragon 8+ Gen 1", "8–12 GB", "120 Hz", "1080 × 2412"],
-    ["Phone (2a)", "2024", "Dimensity 7200 Pro", "8–12 GB", "120 Hz", "1080 × 2412"],
-    ["Phone (3a)", "2025", "Snapdragon 7s Gen 3", "8–12 GB", "120 Hz", "1080 × 2392"]
-  ]
-};
+/* رقم واتساب التغذية (بدون + أو مسافات) */
+const WA_NUMBER = '249124673541';
 
-const $ = (id) => document.getElementById(id);
+/* رصيد ابتدائي للحساب الجديد (للتجربة فقط). اجعله 0 عند الإطلاق الحقيقي */
+const START_BALANCE = 2500;
 
-const brandSelect = $("brandSelect");
-const modelSelect = $("modelSelect");
-const modelSearch = $("modelSearch");
-const searchResults = $("searchResults");
-const modelHint = $("modelHint");
-const generateBtn = $("generateBtn");
-const analysisModal = $("analysisModal");
-const resultModal = $("resultModal");
-const toast = $("toast");
 
-let selectedDevice = null;
-let analysisTimers = [];
-let toastTimer = null;
-let lastFocusedElement = null;
+const PACKS=[
+ {n:'110 جواهر',c:100,i:'fa-gem'},{n:'231 جوهرة',c:200,i:'fa-gem'},{n:'583 جوهرة',c:500,i:'fa-gem',tag:'الأكثر طلباً'},
+ {n:'1188 جوهرة',c:1000,i:'fa-gem'},{n:'عضوية أسبوعية',c:220,i:'fa-calendar-week'},{n:'عضوية شهرية',c:950,i:'fa-crown'}
+];
 
-function normalizeText(value) {
-  return String(value || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9\u0600-\u06ff]+/g, " ")
-    .trim();
+const PAGES=[['home','الرئيسية','fa-house'],['orders','طلباتي','fa-receipt'],['profile','حسابي','fa-user'],['help','الدعم','fa-headset'],['terms','الشروط','fa-shield-halved']];
+
+/* ========== utils.js ==========
+   أدوات مساعدة وحالة الموقع (المستخدمون، المستخدم الحالي، الباقة المختارة) وحفظ البيانات.
+*/
+
+const $=id=>document.getElementById(id);
+
+const get=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch(e){return d}};
+
+const set=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+
+let users=get('pl_users',{}), me=get('pl_me',null), sel=PACKS[0], mode='l', busy=false;
+
+
+// المستخدم الحالي + حفظ البيانات
+const U=()=>users[me], save=()=>set('pl_users',users);
+
+
+// رسالة صغيرة تظهر أعلى الشاشة
+function toast(t){const x=$('toast');x.textContent=t;x.style.display='block';setTimeout(()=>x.style.display='none',2200)}
+
+/* ========== auth.js ==========
+   تسجيل الدخول وإنشاء الحساب والخروج، وتوليد المعرّف.
+*/
+
+// التبديل بين تبويب الدخول وتبويب حساب جديد
+function authTab(m){mode=m;$('tabL').classList.toggle('on',m=='l');$('tabR').classList.toggle('on',m=='r');
+ $('fgName').style.display=$('fgPass2').style.display=m=='r'?'block':'none';
+ $('aBtn').innerHTML=m=='l'?'<i class="fa-solid fa-right-to-bracket"></i> دخول':'<i class="fa-solid fa-user-plus"></i> إنشاء الحساب';$('aErr').textContent=''}
+
+// تشفير كلمة المرور (SHA-256) قبل حفظها
+async function hash(s){try{const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(s));return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('')}catch(e){return btoa(unescape(encodeURIComponent(s)))}}
+
+// زر الدخول/إنشاء الحساب: يفحص البيانات ثم يدخل
+async function submitAuth(){
+ const mail=$('aMail').value.trim().toLowerCase(),pass=$('aPass').value,e=$('aErr');e.textContent='';
+ if(!/^\S+@\S+\.\S+$/.test(mail))return e.textContent='أدخل بريداً إلكترونياً صحيحاً.';
+ if(pass.length<6)return e.textContent='كلمة المرور يجب أن تكون 6 أحرف على الأقل.';
+ const h=await hash(pass);
+ if(mode=='r'){
+  const name=$('aName').value.trim();
+  if(name.length<3)return e.textContent='اسم المستخدم 3 أحرف على الأقل.';
+  if(pass!==$('aPass2').value)return e.textContent='كلمتا المرور غير متطابقتين.';
+  if(users[mail])return e.textContent='هذا البريد مسجل مسبقاً، سجّل الدخول.';
+  users[mail]={name,h,bal:START_BALANCE,pid:'',orders:[],uid:genUid()};
+ }else{
+  if(!users[mail]||users[mail].h!==h)return e.textContent='البريد أو كلمة المرور غير صحيحة.';
+ }
+ set('pl_users',users);me=mail;set('pl_me',me);enter();
 }
 
-function allDevices() {
-  const devices = [];
-  for (const [brand, models] of Object.entries(DEVICE_CATALOG)) {
-    for (const model of models) {
-      devices.push({
-        brand,
-        name: model[0],
-        year: model[1],
-        processor: model[2],
-        ram: model[3],
-        refresh: model[4],
-        resolution: model[5]
-      });
-    }
-  }
-  return devices;
+// تسجيل الخروج والرجوع لصفحة الدخول
+function logout(){me=null;set('pl_me',null);$('app').style.display='none';$('auth').style.display='grid';$('aPass').value=''}
+
+// توليد معرّف فريد من 8 أرقام لكل مستخدم (Paylit ID)
+function genUid(){
+ const used=new Set(Object.values(users).map(x=>x.uid));let id;
+ do{id=String(Math.floor(10000000+Math.random()*90000000))}while(used.has(id));
+ return id;
 }
 
-const deviceIndex = allDevices();
-
-function setSelectOptions(select, options, placeholder) {
-  select.replaceChildren();
-  const first = document.createElement("option");
-  first.value = "";
-  first.textContent = placeholder;
-  select.appendChild(first);
-
-  for (const item of options) {
-    const option = document.createElement("option");
-    option.value = item.value;
-    option.textContent = item.label;
-    select.appendChild(option);
-  }
+// نسخ معرّف المستخدم
+function copyUid(){
+ const t=U().uid;
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('تم نسخ المعرّف')).catch(()=>toast(t));
 }
 
-function initBrands() {
-  const brands = Object.keys(DEVICE_CATALOG).sort((a, b) => a.localeCompare(b));
-  setSelectOptions(
-    brandSelect,
-    brands.map((brand) => ({ value: brand, label: brand })),
-    "اختر شركة هاتفك"
-  );
+/* ========== nav.js ==========
+   التنقل بين الصفحات وإظهار الموقع بعد الدخول.
+*/
+
+// بناء قائمة التنقل (من القائمة PAGES في config.js)
+function buildNav(){
+ $('navTop').innerHTML=PAGES.map(p=>`<a data-p="${p[0]}">${p[1]}</a>`).join('');
+ $('navBot').innerHTML=PAGES.map(p=>`<a data-p="${p[0]}"><i class="fa-solid ${p[2]}"></i>${p[1]}</a>`).join('');
 }
 
-function updateModels() {
-  const brand = brandSelect.value;
-  selectedDevice = null;
-  generateBtn.disabled = true;
-
-  if (!brand || !DEVICE_CATALOG[brand]) {
-    modelSelect.disabled = true;
-    setSelectOptions(modelSelect, [], "اختر الشركة أولًا");
-    modelHint.textContent = "اختر الشركة لعرض الموديلات المتاحة.";
-    return;
-  }
-
-  const models = DEVICE_CATALOG[brand];
-  setSelectOptions(
-    modelSelect,
-    models.map((model, index) => ({
-      value: String(index),
-      label: model[0]
-    })),
-    "اختر موديل هاتفك"
-  );
-
-  modelSelect.disabled = false;
-  modelHint.textContent = `توجد ${models.length} موديلات في القائمة المحلية لشركة ${brand}. هذه القائمة ليست سجلًا شاملًا لجميع هواتف الشركة.`;
+// الانتقال لصفحة (home/orders/profile/help/terms)
+function go(p){
+ document.querySelectorAll('.page').forEach(x=>x.classList.toggle('on',x.id=='p-'+p));
+ document.querySelectorAll('nav a,.bottom a').forEach(a=>a.classList.toggle('on',a.dataset.p==p));
+ try{ if(me&&users[me]){ if(p=='orders')renderOrders(); if(p=='profile')renderProfile(); } }catch(e){ console.error(e) }
+ window.scrollTo(0,0);
 }
 
-function chooseDevice(brand, modelName) {
-  const found = deviceIndex.find(
-    (device) => device.brand === brand && device.name === modelName
-  );
-
-  if (!found) return;
-
-  selectedDevice = { ...found };
-  brandSelect.value = found.brand;
-  updateModels();
-
-  const models = DEVICE_CATALOG[found.brand];
-  const index = models.findIndex((model) => model[0] === found.name);
-
-  if (index >= 0) modelSelect.value = String(index);
-
-  modelSearch.value = `${found.brand} ${found.name}`;
-  searchResults.classList.add("hidden");
-  generateBtn.disabled = false;
-  modelHint.textContent = `تم اختيار ${found.brand} ${found.name}.`;
-}
-
-function renderSearchResults(query) {
-  searchResults.replaceChildren();
-  const normalizedQuery = normalizeText(query);
-
-  if (!normalizedQuery) {
-    searchResults.classList.add("hidden");
-    return;
-  }
-
-  const matches = deviceIndex
-    .filter((device) =>
-      normalizeText(`${device.brand} ${device.name}`).includes(normalizedQuery)
-    )
-    .slice(0, 10);
-
-  if (!matches.length) {
-    const empty = document.createElement("div");
-    empty.className = "search-result";
-    empty.textContent = "لم نجد هذا الموديل في القائمة المحلية. جرّب اسمًا أقصر.";
-    searchResults.appendChild(empty);
-    searchResults.classList.remove("hidden");
-    return;
-  }
-
-  for (const device of matches) {
-    const button = document.createElement("button");
-    button.type = "button";
-    button.className = "search-result";
-    button.innerHTML = "";
-
-    const name = document.createElement("span");
-    name.textContent = `${device.brand} ${device.name}`;
-
-    const detail = document.createElement("small");
-    detail.textContent = `سنة ${device.year} · ${device.processor}`;
-
-    button.append(name, detail);
-    button.addEventListener("click", () => {
-      chooseDevice(device.brand, device.name);
-    });
-    searchResults.appendChild(button);
-  }
-
-  searchResults.classList.remove("hidden");
-}
-
-function selectedStyle() {
-  const checked = document.querySelector('input[name="gameStyle"]:checked');
-  return checked ? checked.value : "balanced";
-}
-
-function updateStyleCards() {
-  document.querySelectorAll(".style-option").forEach((label) => {
-    const input = label.querySelector("input");
-    label.classList.toggle("selected", Boolean(input && input.checked));
-  });
-}
-
-function estimatePerformance(device) {
-  const processor = normalizeText(device.processor);
-  let score = 0;
-
-  const powerfulTokens = [
-    "snapdragon 8",
-    "apple a",
-    "dimensity 8",
-    "dimensity 9",
-    "exynos 2",
-    "tensor g4",
-    "tensor g3",
-    "tensor g2"
-  ];
-
-  const midTokens = [
-    "snapdragon 7",
-    "snapdragon 6",
-    "dimensity 7",
-    "dimensity 6",
-    "helio g99",
-    "helio g100",
-    "exynos 13",
-    "exynos 14",
-    "kirin 9"
-  ];
-
-  if (powerfulTokens.some((token) => processor.includes(token))) score += 3;
-  else if (midTokens.some((token) => processor.includes(token))) score += 2;
-  else score += 1;
-
-  const ramMatch = String(device.ram).match(/^\s*(\d+)/);
-  if (ramMatch) {
-    const ram = Number(ramMatch[1]);
-    if (ram >= 8) score += 2;
-    else if (ram >= 4) score += 1;
-  }
-
-  const hzMatch = String(device.refresh).match(/(\d+)/);
-  if (hzMatch && Number(hzMatch[1]) >= 90) score += 1;
-
-  return Math.min(score, 6);
-}
-
-function calculateSuggestedSettings(device, style) {
-  const performance = estimatePerformance(device);
-
-  const profiles = {
-    balanced: {
-      general: 178,
-      redDot: 172,
-      scope2x: 160,
-      scope4x: 145,
-      sniper: 90,
-      freeLook: 135
-    },
-    rush: {
-      general: 190,
-      redDot: 184,
-      scope2x: 170,
-      scope4x: 152,
-      sniper: 88,
-      freeLook: 145
-    },
-    precision: {
-      general: 165,
-      redDot: 158,
-      scope2x: 148,
-      scope4x: 132,
-      sniper: 78,
-      freeLook: 120
-    }
-  };
-
-  const base = profiles[style] || profiles.balanced;
-  const adjustment = performance >= 5 ? 3 : performance <= 2 ? -3 : 0;
-
-  const settings = [
-    { label: "General", key: "general", value: base.general },
-    { label: "Red Dot", key: "redDot", value: base.redDot },
-    { label: "2x Scope", key: "scope2x", value: base.scope2x },
-    { label: "4x Scope", key: "scope4x", value: base.scope4x },
-    { label: "Sniper Scope", key: "sniper", value: base.sniper },
-    { label: "Free Look", key: "freeLook", value: base.freeLook }
-  ];
-
-  return settings.map((item) => ({
-    ...item,
-    value: Math.max(0, Math.min(200, item.value + adjustment))
-  }));
-}
-
-function suggestDpi(device) {
-  const performance = estimatePerformance(device);
-  if (performance >= 5) return 480;
-  if (performance >= 3) return 420;
-  return 380;
-}
-
-function setAnalysisStep(id, state) {
-  const element = $(id);
-  if (!element) return;
-  element.classList.remove("active", "done");
-  if (state) element.classList.add(state);
-}
-
-function clearAnalysisTimers() {
-  analysisTimers.forEach((timer) => clearTimeout(timer));
-  analysisTimers = [];
-}
-
-function scheduleAnalysis() {
-  clearAnalysisTimers();
-  lastFocusedElement = document.activeElement;
-
-  $("analysisTitle").textContent = "جاري تجهيز التحليل";
-  $("analysisSubtitle").textContent = "يتم فحص المعلومات المتاحة...";
-  $("progressBar").style.width = "0%";
-
-  ["stepDevice", "stepSpecs", "stepSettings"].forEach((id) => {
-    setAnalysisStep(id, "");
-  });
-
-  analysisModal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
-
-  const phases = [
-    {
-      delay: 250,
-      id: "stepDevice",
-      progress: "28%",
-      title: "التعرّف على موديل الجهاز",
-      subtitle: "مراجعة الموديل المحدد في القائمة المحلية."
-    },
-    {
-      delay: 850,
-      id: "stepSpecs",
-      progress: "62%",
-      title: "مراجعة المواصفات المتاحة",
-      subtitle: "قراءة البيانات المسجلة لهذا الموديل."
-    },
-    {
-      delay: 1450,
-      id: "stepSettings",
-      progress: "100%",
-      title: "حساب الإعدادات المقترحة",
-      subtitle: "تجهيز نتيجة أولية قابلة للتجربة."
-    }
-  ];
-
-  for (const phase of phases) {
-    const timer = setTimeout(() => {
-      setAnalysisStep(phase.id, "active");
-      $("progressBar").style.width = phase.progress;
-      $("analysisTitle").textContent = phase.title;
-      $("analysisSubtitle").textContent = phase.subtitle;
-
-      const previousIndex = phases.findIndex((item) => item.id === phase.id);
-      for (let i = 0; i < previousIndex; i++) {
-        setAnalysisStep(phases[i].id, "done");
-      }
-    }, phase.delay);
-    analysisTimers.push(timer);
-  }
-
-  const finishTimer = setTimeout(() => {
-    phases.forEach((phase) => setAnalysisStep(phase.id, "done"));
-    analysisModal.classList.add("hidden");
-    showResults();
-  }, 2050);
-
-  analysisTimers.push(finishTimer);
-}
-
-function addSpecBox(container, label, value) {
-  const box = document.createElement("div");
-  box.className = "spec-box";
-
-  const title = document.createElement("span");
-  title.textContent = label;
-
-  const detail = document.createElement("strong");
-  detail.textContent = value || "غير متوفر";
-
-  box.append(title, detail);
-  container.appendChild(box);
-}
-
-function renderSpecifications(device) {
-  const container = $("specSummary");
-  container.replaceChildren();
-
-  addSpecBox(container, "المعالج", device.processor);
-  addSpecBox(container, "الذاكرة", device.ram);
-  addSpecBox(container, "الشاشة", device.refresh);
-}
-
-function renderSettings(settings) {
-  const container = $("sensitivityList");
-  container.replaceChildren();
-
-  for (const setting of settings) {
-    const row = document.createElement("div");
-    row.className = "sense-row";
-
-    const head = document.createElement("div");
-    head.className = "sense-head";
-
-    const label = document.createElement("span");
-    label.textContent = setting.label;
-
-    const value = document.createElement("strong");
-    value.textContent = String(setting.value);
-
-    head.append(label, value);
-
-    const track = document.createElement("div");
-    track.className = "sense-track";
-
-    const fill = document.createElement("div");
-    fill.className = "sense-fill";
-    fill.style.width = `${setting.value / 200 * 100}%`;
-
-    track.appendChild(fill);
-    row.append(head, track);
-    container.appendChild(row);
-  }
-}
-
-function showResults() {
-  if (!selectedDevice) {
-    showToast("اختر هاتفك أولًا.");
-    return;
-  }
-
-  const style = selectedStyle();
-  const settings = calculateSuggestedSettings(selectedDevice, style);
-  const dpi = suggestDpi(selectedDevice);
-
-  $("resultDevice").textContent =
-    `${selectedDevice.brand} ${selectedDevice.name}`;
-
-  $("dpiValue").textContent = String(dpi);
-
-  $("resultNotice").textContent =
-    "هذه أرقام تجريبية مولدة بقواعد محلية، وليست بيانات جُمعت من الإنترنت أو إعدادات مختبرة على هذا الهاتف.";
-
-  renderSpecifications(selectedDevice);
-  renderSettings(settings);
-
-  const status = $("sourceStatus");
-  status.textContent =
-    "المواصفات مأخوذة من قائمة مدمجة داخل الكود وليست متحققة آنيًا. لم يتم إجراء بحث على الإنترنت، وقيم الحساسية وDPI تقديرية. يجب ربط مصدر موثوق للتحقق من مواصفات الأجهزة وإظهار روابطه هنا.";
-
-  resultModal.classList.remove("hidden");
-  document.body.style.overflow = "hidden";
-
-  $("copyBtn").onclick = async () => {
-    const text = [
-      `Katshr Sensitivity`,
-      `Device: ${selectedDevice.brand} ${selectedDevice.name}`,
-      "",
-      ...settings.map((item) => `${item.label}: ${item.value}`),
-      `DPI (suggested): ${dpi}`,
-      "",
-      "Note: These are experimental suggestions, not verified settings."
-    ].join("\n");
-
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-      } else {
-        const textarea = document.createElement("textarea");
-        textarea.value = text;
-        textarea.style.position = "fixed";
-        textarea.style.opacity = "0";
-        document.body.appendChild(textarea);
-        textarea.select();
-        const copied = document.execCommand("copy");
-        textarea.remove();
-        if (!copied) throw new Error("Clipboard unavailable");
-      }
-      showToast("تم نسخ الإعدادات.");
-    } catch (error) {
-      showToast("تعذر النسخ تلقائيًا. جرّب فتح الموقع عبر HTTPS.");
-    }
-  };
-}
-
-function closeModal(type) {
-  const modal = type === "analysis" ? analysisModal : resultModal;
-  modal.classList.add("hidden");
-
-  if (analysisModal.classList.contains("hidden") &&
-      resultModal.classList.contains("hidden")) {
-    document.body.style.overflow = "";
-  }
-
-  if (lastFocusedElement && typeof lastFocusedElement.focus === "function") {
-    lastFocusedElement.focus();
-  }
-}
-
-function showToast(message) {
-  toast.textContent = message;
-  toast.classList.add("show");
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove("show"), 2500);
-}
-
-brandSelect.addEventListener("change", updateModels);
-
-modelSelect.addEventListener("change", () => {
-  const brand = brandSelect.value;
-  const index = Number(modelSelect.value);
-
-  if (!brand || modelSelect.value === "" || !DEVICE_CATALOG[brand][index]) {
-    selectedDevice = null;
-    generateBtn.disabled = true;
-    return;
-  }
-
-  const modelName = DEVICE_CATALOG[brand][index][0];
-  chooseDevice(brand, modelName);
+// أي ضغطة على رابط فيه data-p داخل القائمة تنقلك للصفحة (تعمل حتى لو لم تُبنَ القائمة بالجافاسكربت)
+document.addEventListener('click',function(e){
+ var a=e.target.closest&&e.target.closest('nav a[data-p], .bottom a[data-p]');
+ if(a){ e.preventDefault(); go(a.dataset.p); }
 });
 
-modelSearch.addEventListener("input", () => {
-  renderSearchResults(modelSearch.value);
-});
+// عرض الموقع بعد الدخول وتحميل بيانات المستخدم
+function enter(){
+ if(!U().uid){U().uid=genUid();save()}
+ $('auth').style.display='none';$('app').style.display='block';
+ $('hi').textContent=U().name;$('pid').value='';renderPacks();refresh();go('home');
+}
 
-modelSearch.addEventListener("focus", () => {
-  if (modelSearch.value.trim()) renderSearchResults(modelSearch.value);
-});
 
-document.addEventListener("click", (event) => {
-  if (!event.target.closest(".search-wrap") &&
-      !event.target.closest("#searchResults") &&
-      !event.target.closest("#modelSearch")) {
-    searchResults.classList.add("hidden");
-  }
-});
+/* ========== store.js ==========
+   صفحة الرئيسية: الباقات، تنفيذ الشحن، نافذة الحالة.
+*/
 
-document.querySelectorAll('input[name="gameStyle"]').forEach((input) => {
-  input.addEventListener("change", updateStyleCards);
-});
+// رسم بطاقات الباقات (من PACKS في config.js)
+function renderPacks(){
+ $('pk').innerHTML=PACKS.map((p,i)=>`<div class="pc ${p===sel?'sel':''}" onclick="pick(${i})">${p.tag?`<span class="tag">${p.tag}</span>`:''}<i class="fa-solid ${p.i}"></i><div class="t">${p.n}</div><div class="p"><span class="coin">P</span>${p.c}</div></div>`).join('');
+}
 
-generateBtn.addEventListener("click", () => {
-  if (!selectedDevice) {
-    showToast("اختر الشركة وموديل الهاتف أولًا.");
-    return;
-  }
-  scheduleAnalysis();
-});
+// اختيار باقة
+function pick(i){sel=PACKS[i];renderPacks();refresh()}
 
-document.querySelectorAll("[data-close]").forEach((button) => {
-  button.addEventListener("click", () => closeModal(button.dataset.close));
-});
+// تحديث الرصيد وملخص الطلب وآخر العمليات
+function refresh(){
+ const u=U();$('bal').textContent=u.bal.toLocaleString('en');
+ $('sName').textContent=sel.n;$('sCost').textContent=sel.c+' نقطة';
+ const after=u.bal-sel.c;$('sAfter').textContent=after<0?'رصيد غير كافٍ':after+' نقطة';
+ $('sAfter').style.color=after<0?'var(--rd)':'#fff';
+ if(!$('pid').value&&u.pid)$('pid').value=u.pid;
+ $('recent').innerHTML=list(u.orders.slice(0,4));
+}
 
-$("newDeviceBtn").addEventListener("click", () => {
-  closeModal("result");
-  selectedDevice = null;
-  brandSelect.value = "";
-  updateModels();
-  modelSelect.value = "";
-  modelSearch.value = "";
-  generateBtn.disabled = true;
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+// رسم قائمة الطلبات (تستخدم في الرئيسية وصفحة طلباتي)
+function list(a){
+ if(!a.length)return '<div class="empty"><i class="fa-regular fa-folder-open"></i>لا توجد طلبات بعد. اختر باقة وابدأ أول شحن.</div>';
+ return a.map(o=>`<div class="row"><div><b>${o.n}</b><small>ID ${o.pid} · ${o.id} · ${o.d}</small></div><span class="st ${o.ok?'ok':'no'}">${o.ok?'ناجح':'فاشل'}</span></div>`).join('');
+}
 
-document.addEventListener("keydown", (event) => {
-  if (event.key !== "Escape") return;
-  if (!analysisModal.classList.contains("hidden")) closeModal("analysis");
-  else if (!resultModal.classList.contains("hidden")) closeModal("result");
-});
+// عرض نافذة الحالة (جاري/نجاح/فشل) وفاتورة الطلب
+function showM(t,title,msg,rc){
+ $('mi').className='mi '+t;$('mi').innerHTML={l:'<i class="fa-solid fa-spinner fa-spin"></i>',s:'<i class="fa-solid fa-circle-check"></i>',e:'<i class="fa-solid fa-circle-xmark"></i>'}[t];
+ $('mt').textContent=title;$('mm').textContent=msg;$('mb').style.display=t=='l'?'none':'block';
+ $('rc').style.display=rc?'block':'none';if(rc){$('rP').textContent=rc.pid;$('rN').textContent=rc.n;$('rC').textContent=rc.c+' نقطة';$('rO').textContent=rc.id}
+ $('ov').style.display='flex';
+}
 
-initBrands();
-updateModels();
-updateStyleCards();
+// إغلاق نافذة الحالة
+function closeM(){$('ov').style.display='none'}
+
+// تنفيذ الشحن: فحص الـ ID والرصيد ثم الخصم وتسجيل الطلب. اربط API المورد هنا
+function order(){
+ if(busy)return;const u=U(),pid=$('pid').value.trim(),e=$('oErr');e.textContent='';
+ if(!/^\d{6,12}$/.test(pid))return e.textContent='Player ID يجب أن يكون أرقاماً فقط (6 إلى 12 رقم).';
+ if(u.bal<sel.c)return showM('e','رصيدك غير كافٍ',`تحتاج ${sel.c} نقطة وعندك ${u.bal}. غذِّ رصيدك ثم أعد المحاولة.`);
+ busy=true;showM('l','جاري تنفيذ الطلب','لا تغلق الصفحة حتى يكتمل الشحن.');
+ setTimeout(()=>{
+  /* هنا اربط الـ API الحقيقي للمورد، وعدّل ok حسب ردّه */
+  const ok=true,id='#PL-'+Math.floor(100000+Math.random()*900000);
+  const o={id,pid,n:sel.n,c:sel.c,ok,d:new Date().toLocaleDateString('ar-EG')};
+  if(ok)u.bal-=sel.c;u.orders.unshift(o);u.pid=pid;save();busy=false;refresh();
+  ok?showM('s','تم الشحن بنجاح','تم إرسال الباقة إلى حساب اللاعب.',o):showM('e','فشل الطلب','لم يتم خصم أي نقاط. حاول مجدداً.');
+ },1600);
+}
+
+
+/* ========== pages.js ==========
+   باقي الصفحات: طلباتي، حسابي، الدعم، تغذية الرصيد.
+*/
+
+// عرض كل الطلبات بصفحة طلباتي
+function renderOrders(){$('allOrders').innerHTML=list(U().orders)}
+
+// تعبئة صفحة حسابي (إحصائيات + بيانات)
+function renderProfile(){
+ const u=U(),ok=u.orders.filter(o=>o.ok);
+ $('pUid').textContent=u.uid;$('stBal').textContent=u.bal;$('stCnt').textContent=ok.length;$('stSpent').textContent=ok.reduce((s,o)=>s+o.c,0);
+ $('pName').value=u.name;$('pMail').value=me;$('pPid').value=u.pid||'';
+}
+
+// حفظ الاسم والـ Player ID
+function saveProfile(){
+ const n=$('pName').value.trim(),p=$('pPid').value.trim();
+ if(n.length<3)return toast('اسم المستخدم 3 أحرف على الأقل');
+ if(p&&!/^\d{6,12}$/.test(p))return toast('Player ID غير صحيح');
+ const u=U();u.name=n;u.pid=p;save();$('hi').textContent=n;toast('تم حفظ التغييرات');
+}
+
+// تغيير كلمة المرور
+async function changePass(){
+ const u=U(),e=$('cErr');e.textContent='';
+ if(await hash($('cOld').value)!==u.h)return e.textContent='كلمة المرور الحالية غير صحيحة.';
+ if($('cNew').value.length<6)return e.textContent='الجديدة يجب أن تكون 6 أحرف على الأقل.';
+ u.h=await hash($('cNew').value);save();$('cOld').value=$('cNew').value='';toast('تم تحديث كلمة المرور');
+}
+
+// إرسال رسالة الدعم عبر واتساب
+function sendSupport(){
+ if($('sSub').value.trim().length<3||$('sMsg').value.trim().length<10)return toast('اكتب الموضوع ورسالة واضحة');
+ const u=U(),t=`الدعم - ${$('sSub').value.trim()}\nالمعرّف: ${u.uid}\nالاسم: ${u.name}\n\n${$('sMsg').value.trim()}`;
+ window.open(`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(t)}`,'_blank');
+ $('sSub').value=$('sMsg').value='';
+}
+
+// فتح نافذة تغذية الرصيد (واتساب)
+function topUp(){
+ const u=U(),msg=`مرحباً، أريد تغذية رصيدي في Paylit.\nالمعرّف (ID): ${u.uid}\nالاسم: ${u.name}`;
+ $('tUid').textContent=u.uid;
+ $('waLink').href=`https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+ $('tov').style.display='flex';
+}
+
+// إغلاق نافذة التغذية
+function closeT(){$('tov').style.display='none'}
+
+// نسخ رقم الواتساب
+function copyWa(){
+ const t='+'+WA_NUMBER;
+ (navigator.clipboard?navigator.clipboard.writeText(t):Promise.reject()).then(()=>toast('تم نسخ الرقم')).catch(()=>toast(t));
+}
+
+
+/* ========== main.js ==========
+   نقطة البداية: تشغيل الموقع. يجب أن يبقى آخر ملف يُحمّل.
+*/
+
+function init(){
+ $('auth').addEventListener('keydown',function(e){if(e.key==='Enter')submitAuth()});
+ buildNav();
+ if(me&&users[me])enter();
+}
+// يشتغل بعد تحميل الصفحة حتى لو وضعت السكربت في <head>
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
